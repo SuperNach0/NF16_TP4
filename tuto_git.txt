@@ -1,0 +1,47 @@
+git permet un collab efficace et un versionning.
+ce sera plus simple pour gérer des projets.
+
+sur un projet existant (ou tu n'as pas les droits) tu peux te faire ta propre version du projet :
+
+git fork <URL>
+
+mais la tu est collab du coup tu peux ajouter et modifier des fichiers directement sur le projet !
+
+il faut que tu te fasse une copie du repo sur ta machine. tu vas dans le dossier dans lequel tu veux le projet :
+
+git clone <URL> [nom du dossier]
+
+et la paf ! d'un coup ya tout qui est arrivé !
+tu peux faire 
+git status -> cette commande affiche les différences entre ton repo local et le repo principal.
+si tu viens juste de clone, tout devrait être à jour.
+
+je t'invite à modifier le fichier README ; écris de la merde dedans, sauvegarde et refais un git status.
+git à détecté les changements! mais pour le moment ces changements ne sont que en local et plus ils ne sont pas suivis ...
+
+pour les faire suivre il faut faire 
+git add <fichiers_a_ajouter>
+dans ce cas vu que c'est un petit projet, tu peux utiliset git add *   cela ajoute tous les changements.
+
+IMPORTANT
+tes changements/fichiers sont à ajouter sous forme de commit. je m'explique 
+une fois que tu as add, il faut dire à git que tu veux considérer ces fichiers comme une 'partie de travail'
+que tu vas envoyer. un commit doit TOUJOURS s'accompagner d'un message; histoire que les autres collaborateurs comprennent
+le travail que tu vas envoyer.
+
+git commit -m "<message>"
+
+une fois cela fait il te suffit d'envoyer ton travail sur le projet :
+
+git push 
+
+
+Pour récupérer le travail fait par les autres et les mettre sur ta version locale :
+
+git pull
+
+dès que tu commences à travailler, lance 
+git status
+git pull
+
+de cette manière tu es sur que ton tavail est à jour
