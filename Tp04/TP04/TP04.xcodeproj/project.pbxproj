@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5A3375CA1FD162A800563CCF /* tp4.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375C81FD162A800563CCF /* tp4.c */; };
 		5A3375CB1FD162A800563CCF /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375C91FD162A800563CCF /* main.c */; };
+		5A3375D01FD1647B00563CCF /* ABR.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375CE1FD1647B00563CCF /* ABR.c */; };
+		5A3375D11FD1647B00563CCF /* AL.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375CF1FD1647B00563CCF /* AL.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +30,10 @@
 		5A3375C71FD162A800563CCF /* tp4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tp4.h; path = ../../tp4.h; sourceTree = "<group>"; };
 		5A3375C81FD162A800563CCF /* tp4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tp4.c; path = ../../tp4.c; sourceTree = "<group>"; };
 		5A3375C91FD162A800563CCF /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../main.c; sourceTree = "<group>"; };
+		5A3375CC1FD1647A00563CCF /* AL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AL.h; path = ../../AL.h; sourceTree = "<group>"; };
+		5A3375CD1FD1647A00563CCF /* ABR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABR.h; path = ../../ABR.h; sourceTree = "<group>"; };
+		5A3375CE1FD1647B00563CCF /* ABR.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ABR.c; path = ../../ABR.c; sourceTree = "<group>"; };
+		5A3375CF1FD1647B00563CCF /* AL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AL.c; path = ../../AL.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,10 @@
 			children = (
 				5A3375C91FD162A800563CCF /* main.c */,
 				5A3375C81FD162A800563CCF /* tp4.c */,
+				5A3375CE1FD1647B00563CCF /* ABR.c */,
+				5A3375CD1FD1647A00563CCF /* ABR.h */,
+				5A3375CF1FD1647B00563CCF /* AL.c */,
+				5A3375CC1FD1647A00563CCF /* AL.h */,
 				5A3375C71FD162A800563CCF /* tp4.h */,
 			);
 			path = TP04;
@@ -124,7 +134,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A3375D01FD1647B00563CCF /* ABR.c in Sources */,
 				5A3375CB1FD162A800563CCF /* main.c in Sources */,
+				5A3375D11FD1647B00563CCF /* AL.c in Sources */,
 				5A3375CA1FD162A800563CCF /* tp4.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
