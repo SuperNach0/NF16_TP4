@@ -12,7 +12,8 @@ typedef struct feuille
 typedef feuille * ABR;
 
 feuille *creerfeuille (char *texte);
-void ajouterfeuille (feuille **racine, char* mot);
+void ajoutMot (feuille **racine, char* mot);
+feuille* rechercherMot (feuille *racine, char* mot);
 
 
 

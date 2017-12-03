@@ -24,7 +24,7 @@ feuille *creerfeuille (char *texte){
 }
 
 
-void ajouterfeuille (feuille** racine, char* mot){
+void ajoutMot (feuille** racine, char* mot){
     if (*racine == NULL){
         printf("arbrevide \n");
         *racine = creerfeuille(mot);
@@ -40,7 +40,7 @@ void ajouterfeuille (feuille** racine, char* mot){
 
         while (it!=NULL){
 
-            if (strcmp(it->mot,mot)==0){printf("mot deja dans l'arbre \n"); return racine;}
+            if (strcmp(it->mot,mot)==0){printf("mot deja dans l'arbre \n"); return (void)0;}
             else if (strcmp(mot,it->mot)>0){
                 printf("%s est plus grand que %s \n",mot,it->mot);
                 pred = it;
@@ -65,7 +65,23 @@ void ajouterfeuille (feuille** racine, char* mot){
            printf("insere a droite de %s\n",pred->mot);
         }
     }
+}
 
+feuille* rechercherMot (feuille *racine, char* mot){
+     if (racine == NULL){
+        printf("mot introuvable retourne NULL \n");
+        return NULL;
+    }
+    else {
+        if (strcmp(racine->mot,mot)==0){
+             printf("mot trouve \n");
+             return racine;
+        }
+        else if (strcmp(racine->mot,mot)<0){
+            return rechercherMot(racine->right,mot);
+        }
+        else return rechercherMot(racine->left,mot);
 
+    }
 
 }

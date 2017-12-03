@@ -15,14 +15,15 @@ int main()
 
 
     printf("okok \n");
-    ajouterfeuille(&racine,"lalala");
-    ajouterfeuille(&racine,"lalala");
-    ajouterfeuille(&racine,"a");
-    ajouterfeuille(&racine,"b");
-    ajouterfeuille(&racine,"p");
-    ajouterfeuille(&racine,"z");
-    ajouterfeuille(&racine,"q");
-    ajouterfeuille(&racine,"n");
+    ajoutMot(&racine,"lalala");
+    ajoutMot(&racine,"lalala");
+    ajoutMot(&racine,"a");
+    ajoutMot(&racine,"b");
+    ajoutMot(&racine,"p");
+    ajoutMot(&racine,"z");
+    ajoutMot(&racine,"q");
+    ajoutMot(&racine,"n");
+    rechercherMot(racine,"f");
 
     printf("\nfin");
     return 0;
