@@ -14,6 +14,10 @@ typedef feuille * ABR;
 feuille *creerfeuille (char *texte);
 void ajoutMot (feuille **racine, char* mot);
 feuille* rechercherMot (feuille *racine, char* mot);
+feuille* rechercherMin (feuille *racine);
+feuille* rechercherMot2 (feuille **racine, char* mot);
+void supprimerMot (feuille **racine, char* mot);
+
 
 
 

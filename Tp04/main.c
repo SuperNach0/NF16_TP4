@@ -15,15 +15,28 @@ int main()
 
 
     printf("okok \n");
-    ajoutMot(&racine,"lalala");
-    ajoutMot(&racine,"lalala");
+    ajoutMot(&racine,"f");
+    ajoutMot(&racine,"d");
     ajoutMot(&racine,"a");
     ajoutMot(&racine,"b");
     ajoutMot(&racine,"p");
     ajoutMot(&racine,"z");
     ajoutMot(&racine,"q");
-    ajoutMot(&racine,"n");
-    rechercherMot(racine,"f");
+    supprimerMot(&racine,"a");
+    ajoutMot(&racine,"e");
+    ajoutMot(&racine,"o");
+    ajoutMot(&racine,"y");
+    ajoutMot(&racine,"d");
+    ajoutMot(&racine,"c");
+
+
+
+
+
+
+
+
+    //rechercherMot2(racine,"b");
 
     printf("\nfin");
     return 0;

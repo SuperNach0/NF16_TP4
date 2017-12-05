@@ -85,3 +85,79 @@ feuille* rechercherMot (feuille *racine, char* mot){
     }
 
 }
+
+feuille* rechercherMin (feuille *racine){
+    if (racine == NULL){
+        printf("arbre vide\n");
+        return NULL;
+    }
+    if (racine->left)
+        rechercherMin(racine->left);
+    else {
+        printf("min de l'arbre : %s \n", racine->mot);
+        return racine;
+
+    }
+}
+
+feuille* rechercherMot2 (feuille **racine, char* mot){
+
+    if (*racine == NULL){
+        printf("arbre vide retourne NULL \n");
+        return NULL;
+    }
+
+    else {
+        feuille *it = *racine;
+        while (it != NULL){
+            if (strcmp(it->mot,mot)==0){
+                printf("mot trouve\n");
+                return it;
+            }
+            else if (strcmp(it->mot,mot)<0)
+                it= it->right;
+            else it=it->left;
+        }
+        printf("mot pas trouve NUll ret \n");
+        return NULL;
+    }
+}
+
+void supprimerMot (feuille **racine, char* mot){
+    feuille * todelete =rechercherMot2(racine,mot);
+    if (todelete == NULL){
+        printf("supression : mot introuvable\n");
+        return (void)0;
+    }
+    else {
+       if(todelete->right && todelete->left){/// fils gauche et droit
+        feuille* temp = rechercherMin(todelete->right);
+        if (temp==todelete->right){
+            todelete->right=temp->right;
+            strcpy(todelete->mot,temp->mot);
+            free(temp);
+            printf("supression : il avait 2 fils\n");
+            return (void)0;
+        }
+        else{
+            strcpy(todelete->mot,temp->mot);
+            temp->pere->left=temp->right;
+            free(temp);
+            printf("supression : il avait 2 fils\n");
+            return (void)0;
+        }
+       }
+       else {
+            feuille * temp = todelete;
+            if (todelete->right==NULL)
+                todelete=todelete->left;
+            else if (todelete->left==NULL)
+                todelete=todelete->right;
+            free(temp);
+            printf("supression : il avait 1 fils\n");
+            return (void)0;
+       }
+
+
+    }
+}
