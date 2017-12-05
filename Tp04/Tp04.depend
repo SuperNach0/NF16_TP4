@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1512119941 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\al.c
+	<stdio.h>
+	<stdlib.h>
+	"tp4.h"
+	"AL.h"
+	"ABR.h"
+
+1512119959 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\tp4.h
+
+1512119961 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\al.h
+
+1512124964 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.h
+
+1512125054 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\main.c
+	<stdio.h>
+	<stdlib.h>
+	"tp4.h"
+	"AL.h"
+	"ABR.h"
+
+1512119928 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\tp4.c
+	<stdio.h>
+	<stdlib.h>
+	"tp4.h"
+	"AL.h"
+	"ABR.h"
+
+1512125016 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"tp4.h"
+	"ABR.h"
+
