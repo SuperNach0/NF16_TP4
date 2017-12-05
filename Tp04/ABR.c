@@ -149,15 +149,73 @@ void supprimerMot (feuille **racine, char* mot){
        }
        else {
             feuille * temp = todelete;
-            if (todelete->right==NULL)
-                todelete=todelete->left;
-            else if (todelete->left==NULL)
-                todelete=todelete->right;
-            free(temp);
-            printf("supression : il avait 1 fils\n");
+            if (todelete->right==NULL){
+                if (todelete->left==NULL){///il n'a pas de fils
+                    printf("il avait 0 fils \n");
+                    if (todelete->pere->right==todelete){///c'était un fils gauche ou droit ?
+                        todelete->pere->right=NULL;
+                    }
+                    else
+                        todelete->pere->left=NULL;
+                    free(todelete);
+                    return;
+                }
+                else{/// il a un fils gauche
+                        if (todelete->pere->right==todelete){
+                        todelete->pere->right=todelete->left;
+                    }
+                    else
+                        todelete->pere->left=todelete->left;
+                     printf("supression : il avait 1 fils gauche \n");
+                    free(todelete);
+                    return;
+
+                }
+
+            }
+            else{///il a un fils droit
+                    if (todelete->pere->right==todelete){
+                        todelete->pere->right=todelete->right;
+                    }
+                    else
+                        todelete->pere->left=todelete->right;
+                    printf("supression : il avait 1 fils droit \n");
+                    free(todelete);
+                    return;
+
+            }
+
+
             return (void)0;
        }
-
-
     }
 }
+
+void afficherArbre (feuille *racine){
+    if (!racine) return ;
+    if (racine->left) afficherArbre(racine->left);
+    printf("%s\n",racine->mot);
+    if (racine->right) afficherArbre(racine->right);
+
+}
+
+void ouvrir (feuille ** racine, FILE * fichier){
+     char line [ 128 ];
+        while ( fgets ( line, sizeof line, fichier ) != NULL ) {//read a line
+            line[strlen(line)-1]='\0';///on elève le \n
+            ajoutMot(racine,line);
+        }
+return;
+}
+
+void quitter (feuille * racine, FILE * fichier ){
+    while (racine!=NULL){
+            fprintf(fichier,"%s\n",racine->mot);
+            quitter(racine->left,fichier);
+            quitter(racine->right,fichier);
+            free(racine);
+            return;
+    }
+
+}
+

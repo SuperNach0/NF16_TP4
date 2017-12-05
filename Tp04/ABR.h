@@ -17,6 +17,11 @@ feuille* rechercherMot (feuille *racine, char* mot);
 feuille* rechercherMin (feuille *racine);
 feuille* rechercherMot2 (feuille **racine, char* mot);
 void supprimerMot (feuille **racine, char* mot);
+void afficherArbre (feuille *racine);
+
+void ouvrir (feuille ** racine, FILE * fichier);
+void quitter (feuille * racine, FILE * fichier );
+
 
 
 
