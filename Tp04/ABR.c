@@ -219,3 +219,9 @@ void quitter (feuille * racine, FILE * fichier ){
 
 }
 
+
+
+void suggestionMots (int k, feuille *dico,char *souschaine){
+
+return;
+}

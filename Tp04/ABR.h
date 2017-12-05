@@ -22,6 +22,8 @@ void afficherArbre (feuille *racine);
 void ouvrir (feuille ** racine, FILE * fichier);
 void quitter (feuille * racine, FILE * fichier );
 
+void suggestionMots (int k, feuille *dico,char *souschaine);
+
 
 
 

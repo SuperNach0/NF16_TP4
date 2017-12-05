@@ -21,6 +21,7 @@ int main()
 
     printf("okok \n");
     ajoutMot(&racine,"piiiuuuuiiiii");
+    ajoutMot(&racine,"zizi");
     supprimerMot(&racine,"g");
     afficherArbre(racine);
 
