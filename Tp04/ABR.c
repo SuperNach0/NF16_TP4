@@ -88,13 +88,13 @@ feuille* rechercherMot (feuille *racine, char* mot){
 
 feuille* rechercherMin (feuille *racine){
     if (racine == NULL){
-        printf("arbre vide\n");
+      //  printf("arbre vide\n");
         return NULL;
     }
     if (racine->left)
         rechercherMin(racine->left);
     else {
-        printf("min de l'arbre : %s \n", racine->mot);
+       /// printf("min de l'arbre : %s \n", racine->mot);
         return racine;
 
     }
@@ -198,6 +198,23 @@ void afficherArbre (feuille *racine){
     if (racine->right) afficherArbre(racine->right);
 
 }
+void afficherDec (feuille *racine, int *dec, int length, char* souschaine){
+    if (!racine) return ;
+    if ((*dec)==0) return;
+    if (racine->left) afficherDec(racine->left,dec,length,souschaine);
+    if ((*dec)>0){
+        if (strncmp(racine->mot,souschaine,length)==0){
+            (*dec)--;
+            printf("%s\n",racine->mot);
+            if ((*dec)==0) return;
+        }
+        if (racine->right) afficherDec(racine->right,dec,length,souschaine);
+    }
+
+
+}
+
+
 
 void ouvrir (feuille ** racine, FILE * fichier){
      char line [ 128 ];
@@ -222,6 +239,70 @@ void quitter (feuille * racine, FILE * fichier ){
 
 
 void suggestionMots (int k, feuille *dico,char *souschaine){
+    int i;
+    int *dec = &k;
+    if ((*dec)==0){
+        printf("fin des suggestion\n");
+        return;
+    }
+    int lengthmax;
+/// on va parcourir l'arbre pour trouver la sous chaine avec aussi un pred dans le cas ou elle exitste pas.
+    if (dico==NULL){
+        printf("dico vide \n");
+        return;
+    }
+    feuille *temp = dico;
+    feuille *leplusproche =dico;
+    for (i=1;i<=strlen(souschaine);i++){
+        while (temp!=NULL){
 
+            if (strncmp(souschaine,temp->mot,i)==0){
+                leplusproche=temp;
+                lengthmax = i;
+                printf("%s\n",leplusproche->mot);
+                break;
+            }
+            else if(strncmp(souschaine,temp->mot,i)<0)
+                temp=temp->left;
+            else if (strncmp(souschaine,temp->mot,i)>0)
+                temp=temp->right;
+        }
+    }
+    if ((leplusproche==dico)&&(strncmp(souschaine,leplusproche->mot,1)!=0)){
+        printf("pas de correspondance meme pour la premiere lettre \n");
+        return;
+    }
+   // printf("suggestion : %s\n  sa longueur de sous chaine %d\n",leplusproche->mot,lengthmax);
+    ///ICI on a la première occurence de la sous chaine (la plus grade trouvée)
+    /// il faut chercher dans son sous arbre GAUCHE si il n'y a pas mieux !!
+    temp=leplusproche;
+    while(temp!=NULL){
+            if (strncmp(temp->mot,souschaine,lengthmax)==0){///c'est plus petit et a aussi la sous chaine
+                leplusproche=temp;
+            }
+            temp=temp->left;
+    }
+
+   // afficherArbre(leplusproche->left);
+    printf("\n");
+    printf("suggestions  : \n%s\n",leplusproche->mot);///c'est lui le plus proche !
+    (*dec)--;
+    if ((*dec)==0){
+        printf("fin des suggestion\n");
+        return;
+    }
+    afficherDec(leplusproche->right,dec,lengthmax,souschaine);
+    if ((*dec)==0){
+        printf("fin des suggestion\n");
+        return;
+    }
+    afficherDec(leplusproche->left,dec,lengthmax,souschaine);
+    if ((*dec)==0){
+        printf("fin des suggestion\n");
+        return;
+    }
+
+
+printf("fin des suggestion\n");
 return;
 }

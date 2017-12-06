@@ -22,8 +22,11 @@ int main()
     printf("okok \n");
     ajoutMot(&racine,"piiiuuuuiiiii");
     ajoutMot(&racine,"zizi");
-    supprimerMot(&racine,"g");
+    supprimerMot(&racine,"bouteille");
     afficherArbre(racine);
+
+    printf("\n");
+    suggestionMots(20,racine,"b");
 
     fichier = fopen("dicoErwan.txt", "w+");
     quitter(racine,fichier);
