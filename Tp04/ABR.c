@@ -32,7 +32,7 @@ void ajoutMot (feuille** racine, char* mot){
 
     }
     else {
-        printf("PAS VIDE\n");
+      //  printf("PAS VIDE\n");
 
         int gauche =0;
         feuille* it = *racine;
@@ -42,13 +42,13 @@ void ajoutMot (feuille** racine, char* mot){
 
             if (strcmp(it->mot,mot)==0){printf("mot deja dans l'arbre \n"); return (void)0;}
             else if (strcmp(mot,it->mot)>0){
-                printf("%s est plus grand que %s \n",mot,it->mot);
+               // printf("%s est plus grand que %s \n",mot,it->mot);
                 pred = it;
                 it = it->right;
                 gauche =0;
             }
             else if (strcmp(mot,it->mot)<0){
-                printf("%s est plus petit que %s \n",mot,it->mot);
+               // printf("%s est plus petit que %s \n",mot,it->mot);
                 pred = it;
                 it = it->left;
                 gauche =1;
