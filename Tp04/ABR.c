@@ -198,21 +198,7 @@ void afficherArbre (feuille *racine){
     if (racine->right) afficherArbre(racine->right);
 
 }
-void afficherDec (feuille *racine, int *dec, int length, char* souschaine){
-    if (!racine) return ;
-    if ((*dec)==0) return;
-    if (racine->left) afficherDec(racine->left,dec,length,souschaine);
-    if ((*dec)>0){
-        if (strncmp(racine->mot,souschaine,length)==0){
-            (*dec)--;
-            printf("%s\n",racine->mot);
-            if ((*dec)==0) return;
-        }
-        if (racine->right) afficherDec(racine->right,dec,length,souschaine);
-    }
 
-
-}
 
 
 
@@ -237,11 +223,23 @@ void quitter (feuille * racine, FILE * fichier ){
 }
 
 
+feuille* successeur (feuille *racine){
+    if (racine->right){
+        return rechercherMin(racine->right);
+    }
+        feuille *pere = racine->pere;
+        while ((racine!=NULL)&& racine==pere->right){
+          racine = pere;
+          pere=pere->pere;
+        }
+        return pere;
+}
+
+
 
 void suggestionMots (int k, feuille *dico,char *souschaine){
     int i;
-    int *dec = &k;
-    if ((*dec)==0){
+    if (k==0){
         printf("fin des suggestion\n");
         return;
     }
@@ -286,20 +284,16 @@ void suggestionMots (int k, feuille *dico,char *souschaine){
    // afficherArbre(leplusproche->left);
     printf("\n");
     printf("suggestions  : \n%s\n",leplusproche->mot);///c'est lui le plus proche !
-    (*dec)--;
-    if ((*dec)==0){
+    k--;
+    if (k==0){
         printf("fin des suggestion\n");
         return;
     }
-    afficherDec(leplusproche->right,dec,lengthmax,souschaine);
-    if ((*dec)==0){
-        printf("fin des suggestion\n");
-        return;
-    }
-    afficherDec(leplusproche->left,dec,lengthmax,souschaine);
-    if ((*dec)==0){
-        printf("fin des suggestion\n");
-        return;
+    feuille * suc = successeur(leplusproche);
+    while ((k!=0)&&(strncmp(suc->mot,souschaine,lengthmax)==0)){
+        printf("%s\n",suc->mot);
+        suc=successeur(suc);
+        k--;
     }
 
 

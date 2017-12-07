@@ -26,7 +26,7 @@ int main()
     afficherArbre(racine);
 
     printf("\n");
-    suggestionMots(20,racine,"b");
+    suggestionMots(20,racine,"bam");
 
     fichier = fopen("dicoErwan.txt", "w+");
     quitter(racine,fichier);
