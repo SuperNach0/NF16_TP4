@@ -7,24 +7,29 @@
 
 int main()
 {
-
-
-
     feuille* racine = NULL;
+    FILE* fichier = NULL;
+    fichier = fopen("dicoErwan.txt", "r+");
+    if (fichier != NULL){
+        ouvrir(&racine,fichier);
+    }
+     else {
+      perror ( fichier ); /* why didn't the file open? */
+   }
 
 
 
     printf("okok \n");
-    ajoutMot(&racine,"lalala");
-    ajoutMot(&racine,"lalala");
-    ajoutMot(&racine,"a");
-    ajoutMot(&racine,"b");
-    ajoutMot(&racine,"p");
-    ajoutMot(&racine,"z");
-    ajoutMot(&racine,"q");
-    ajoutMot(&racine,"n");
-    rechercherMot(racine,"f");
+    ajoutMot(&racine,"piiiuuuuiiiii");
+    ajoutMot(&racine,"zizi");
+    supprimerMot(&racine,"bouteille");
+    afficherArbre(racine);
 
-    printf("\nfin");
+    printf("\n");
+    suggestionMots(5,racine,"bite");
+
+    fichier = fopen("dicoErwan.txt", "w+");
+    quitter(racine,fichier);
+    fclose(fichier);
     return 0;
 }
