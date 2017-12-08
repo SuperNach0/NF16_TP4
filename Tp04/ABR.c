@@ -407,8 +407,8 @@ void print (int k,feuille *dico, char * souschaine, int veri)
     feuille *temp = dico;
     feuille *leplusproche =dico;
     ///BUUUUUUUUUUUUUUUUUUUUUUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-    while ((leplusproche!=NULL)&& (strcmp(leplusproche->mot,souschaine)!=0) ){
-            //printf("%s\n",leplusproche->mot);
+    while ((leplusproche!=NULL)&& (strncmp(leplusproche->mot,souschaine,strlen(souschaine))!=0) ){
+
         if (strcmp(leplusproche->mot,souschaine)<0){
                 temp=leplusproche;
                 leplusproche=leplusproche->right;
@@ -417,10 +417,15 @@ void print (int k,feuille *dico, char * souschaine, int veri)
         else if (strcmp(leplusproche->mot,souschaine)>0){
                 temp=leplusproche;
                 leplusproche=leplusproche->left;
+
         }
     }
     //printf("\nhihi\n");
-    if (leplusproche==NULL)leplusproche=temp;
+
+    if (leplusproche==NULL){
+            leplusproche=successeur(temp);
+
+    }
 
 
 
