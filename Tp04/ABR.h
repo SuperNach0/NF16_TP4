@@ -15,10 +15,13 @@ feuille *creerfeuille (char *texte);
 void ajoutMot (feuille **racine, char* mot);
 feuille* rechercherMot (feuille *racine, char* mot);
 feuille* rechercherMin (feuille *racine);
+feuille* rechercherMax (feuille *racine);
+
 feuille* rechercherMot2 (feuille **racine, char* mot);
 void supprimerMot (feuille **racine, char* mot);
 
 feuille* successeur (feuille *racine);
+feuille* predecesseur (feuille *racine);
 
 void afficherArbre (feuille *racine);
 
@@ -27,6 +30,8 @@ void ouvrir (feuille ** racine, FILE * fichier);
 void quitter (feuille * racine, FILE * fichier );
 
 void suggestionMots (int k, feuille *dico,char *souschaine);
+
+void print (int k ,feuille *dico, char * souschaine, int veri);
 
 
 

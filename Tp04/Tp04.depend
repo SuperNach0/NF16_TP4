@@ -10,9 +10,9 @@
 
 1512119961 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\al.h
 
-1512640283 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.h
+1512730996 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.h
 
-1512640904 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\main.c
+1512732280 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\main.c
 	<stdio.h>
 	<stdlib.h>
 	"tp4.h"
@@ -26,7 +26,7 @@
 	"AL.h"
 	"ABR.h"
 
-1512640436 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.c
+1512744561 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
