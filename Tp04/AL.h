@@ -7,9 +7,7 @@ typedef struct T_cell{
     struct T_cell * alt;
 }Cellule;
 
-typedef struct T_dico{
-    Cellule * premier;
-}Dico;
+typedef Cellule * Dico;
 
 typedef struct T_mot{
     char c;
@@ -17,9 +15,11 @@ typedef struct T_mot{
 }Mot;
 
 
-Dico initDico2(Dico dico, Mot mot);
+Dico initDico2(Dico *dico, Mot mot);
 Dico prefixeMot(Dico dico, Mot mot);
 int rechercheMot2(Mot mot, Dico dico);
-Dico ajoutMot2(Mot mot, Dico dico);
+Dico ajoutMot2(Mot mot, Dico *dico);
 Dico supprimeMot2(Mot mot, Dico dico);
+
+void fctionTest();
 #endif // AL_H_INCLUDED
