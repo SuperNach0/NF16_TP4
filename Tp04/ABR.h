@@ -1,24 +1,13 @@
 #ifndef ABR_H_INCLUDED
 #define ABR_H_INCLUDED
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-typedef struct feuille{
-	char* mot;
-	struct feuille *father;
-	struct feuille *lptr;
-	struct feuille *rptr;
-} feuille;
-=======
-typedef struct feuille
-{
+
+typedef struct T_feuille{
     char mot[20];
-    struct feuille* pere;
-    struct feuille* left;
-    struct feuille* right;
-}  feuille;
->>>>>>> cca1c59bfb42ed7805b969033b302dbb391f713f
+    struct T_feuille* pere;
+    struct T_feuille* left;
+    struct T_feuille* right;
+}feuille;
 
 typedef feuille * ABR;
 
@@ -38,10 +27,6 @@ void ouvrir (feuille ** racine, FILE * fichier);
 void quitter (feuille * racine, FILE * fichier );
 
 void suggestionMots (int k, feuille *dico,char *souschaine);
-
-
-
->>>>>>> bd058210020c39d384109e2c6df6abc7714e1b87
 
 
 #endif // ABR_H_INCLUDED

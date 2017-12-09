@@ -92,11 +92,10 @@ feuille* rechercherMin (feuille *racine){
         return NULL;
     }
     if (racine->left)
-        rechercherMin(racine->left);
+        return rechercherMin(racine->left);
     else {
        /// printf("min de l'arbre : %s \n", racine->mot);
         return racine;
-
     }
 }
 
