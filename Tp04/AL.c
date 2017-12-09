@@ -119,127 +119,7 @@ int rechercheMot2(Mot mot, Dico dico){
     return 0;
 }
 
-//Description: On trouve le prefixe, ensuite on ajoute chaque lettre qui reste
 Dico ajoutMot2(Mot mot, Dico *dico){
-    if(rechercheMot2(mot,*dico)){
-        printf("[ajoutMot2 : Information] : Ce mot est deja dans le dictionnaire, dictionnaire inchange renvoye\n");
-        return *dico;
-    }
-    else if(dico == NULL){
-        printf("[ajoutMot2 : Information] : Dictionnaire vide, on l'initialise avec le mot passe en parametre\n");
-        return initDico2(dico, mot);
-    }
-    else{
-        // VARIABLES //
-        Mot *monMot = &mot;
-        Cellule * iteraCell, * iteraCell2, *prefixe;
-        iteraCell = *dico;
-        prefixe = NULL;
-        int b = 1;
-        // FIN VARIABLES//
-        
-        //Objectif: Trouver le préfixe du mot, et y ajouter ce qu'il manque
-        //Cas 1: on trouve le mot en entier, dans ce cas on ajoute $
-        //Cas 2: on trouve un NULL avant la fin du mot, dans ce cas on ajoute les lettres qu'il manque et un $
-        
-        while (b){
-            // Recherche de la bonne lettre alternative
-            while ((iteraCell->alt!=NULL)&&(iteraCell->alt->c < monMot->c)){
-                iteraCell = iteraCell->alt ;
-            }
-
-            if((iteraCell!=NULL)&&(iteraCell->c == monMot->c)){
-                
-                if((monMot=monMot->suivant)==NULL){ // CAS 1
-                    b=0;
-                    if(iteraCell->succ->c == '$'){
-                        b=0;
-                        // ce cas ne devrait jamais se produire
-                        printf("[ajoutMot2 : ERREUR] : Ce mot est deja dans le dictionnaire, dictionnaire inchange renvoye (cas impossible)\n");
-                        return *dico;
-                    }
-                    else{
-                       
-                        iteraCell->succ =  creerCellule('$', iteraCell->succ, NULL);;
-                        b=0;
-                        printf("[ajoutMot2 : OK] : Mot ajoute par insertion du char '$'\n");
-                        return *dico;
-                    }
-                }
-                else{ // Cas où on a pas fini ni le mot ni le dico, donc on continue
-                    prefixe = iteraCell;
-                    iteraCell = iteraCell->succ;
-                }
-            }
-            else{ // CAS 2
-                b=0;
-                int i = 1;
-                iteraCell = prefixe;
-                
-                //Creation de la nouvelle cellule
-                iteraCell2 = creerCellule(monMot->c, NULL, NULL);
-                if(iteraCell==NULL){
-                    /// Cas où il faut ajouter la celllule à la racine ou alternatives de la racine
-                    if((*dico)->c < monMot->c){
-                        ////On place en racine
-                        iteraCell2->alt = *dico;
-                        (*dico) = iteraCell2;
-                        iteraCell = (*dico);
-                        
-                    }else{
-                        ////On trouve l'alternative tq on doit placer la cellule après
-                        iteraCell= *dico;
-                        while ((iteraCell->alt != NULL) && (iteraCell->alt->c < monMot->c)){
-                            iteraCell = iteraCell -> alt;
-                        }
-                        ///On insere après iteraCell
-                        
-                        iteraCell2->alt = iteraCell->alt;
-                        iteraCell->alt = iteraCell2;
-                        iteraCell = iteraCell->alt;
-                    }
-                    
-                }
-                // On trouve la position où insérer
-                else if ((iteraCell->succ->c < monMot->c)&&(iteraCell->succ->c != '$')){
-                    /// Cas où on doit mettre en successeur
-                    iteraCell2->alt = iteraCell->succ;
-                    iteraCell->succ = iteraCell2;
-                    iteraCell= iteraCell->succ;
-                }
-                else {// Cas normal
-                    iteraCell=iteraCell->succ;
-                    while ((iteraCell->alt != NULL) && (iteraCell->alt->c < monMot->c)){
-                        iteraCell = iteraCell -> alt;
-                    }
-                    ///On insere après iteraCell
-                    
-                    iteraCell2->alt = iteraCell->alt;
-                    iteraCell->alt = iteraCell2;
-                    iteraCell = iteraCell2;
-                }
-                monMot=monMot->suivant;
-                //Plus qu'à dérouler le mot
-                while (monMot != NULL) {
-                    iteraCell2 = creerCellule(monMot->c, NULL, NULL);
-                    iteraCell->succ = iteraCell2;
-                    iteraCell = iteraCell->succ;
-                    monMot = monMot->suivant;
-                    i++;
-                }
-                
-                // On fini le mot par un $, que l'on rattache
-                iteraCell2 = creerCellule('$', NULL, NULL);
-                iteraCell->succ = iteraCell2;
-                printf("[ajoutMot2 : OK] : Mot ajoute par insertion de %d caracteres et de '$'\n",i);
-                return *dico;
-            }
-        }
-    }
-    return *dico;
-}
-
-Dico ajoutMot22(Mot mot, Dico *dico){
     if(rechercheMot2(mot,*dico)){
         printf("[ajoutMot2 : Information] : Ce mot est deja dans le dictionnaire, dictionnaire inchange renvoye\n");
         return *dico;
@@ -551,7 +431,7 @@ void fctionTest(){
     printf("\n############################\n");
     printf("[ESSAI 6] On essaie de remplir le Dico\n");
     for(i=0;i<nbmots;i++){
-        ledico = ajoutMot22(tableauMots[i], &ledico);
+        ledico = ajoutMot2(tableauMots[i], &ledico);
     }
     int g = 1;
     for(i=0;i<nbmots;i++){
