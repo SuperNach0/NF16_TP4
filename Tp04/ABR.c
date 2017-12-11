@@ -124,6 +124,22 @@ feuille* rechercherMin (feuille *racine)
 }
 
 
+feuille* rechercherMax (feuille *racine)
+{
+    if (racine == NULL)
+    {
+        //  printf("arbre vide\n");
+        return NULL;
+    }
+    if (racine->right)
+        return rechercherMax(racine->right);
+    else {
+       /// printf("min de l'arbre : %s \n", racine->mot);
+        return racine;
+    }
+}
+
+
 feuille* rechercherMot2 (feuille **racine, char* mot)
 {
 
@@ -170,7 +186,7 @@ void supprimerMot (feuille **racine, char* mot)
                 todelete->right=temp->right;
                 strcpy(todelete->mot,temp->mot);
                 free(temp);
-                printf("supression : il avait 2 fils\n");
+             ///   printf("supression : il avait 2 fils\n");
                 return (void)0;
             }
             else
@@ -178,7 +194,7 @@ void supprimerMot (feuille **racine, char* mot)
                 strcpy(todelete->mot,temp->mot);
                 temp->pere->left=temp->right;
                 free(temp);
-                printf("supression : il avait 2 fils\n");
+           ///     printf("supression : il avait 2 fils\n");
                 return (void)0;
             }
         }
@@ -189,7 +205,7 @@ void supprimerMot (feuille **racine, char* mot)
             {
                 if (todelete->left==NULL) ///il n'a pas de fils
                 {
-                    printf("il avait 0 fils \n");
+              ///      printf("il avait 0 fils \n");
                     if (todelete->pere->right==todelete) ///c'était un fils gauche ou droit ?
                     {
                         todelete->pere->right=NULL;
@@ -207,7 +223,7 @@ void supprimerMot (feuille **racine, char* mot)
                     }
                     else
                         todelete->pere->left=todelete->left;
-                    printf("supression : il avait 1 fils gauche \n");
+                  ///  printf("supression : il avait 1 fils gauche \n");
                     free(todelete);
                     return;
 
@@ -222,7 +238,7 @@ void supprimerMot (feuille **racine, char* mot)
                 }
                 else
                     todelete->pere->left=todelete->right;
-                printf("supression : il avait 1 fils droit \n");
+             ///   printf("supression : il avait 1 fils droit \n");
                 free(todelete);
                 return;
 
@@ -388,7 +404,6 @@ void print (int k,feuille *dico, char * souschaine, int veri)
     int lengthmax;
     feuille *temp = dico;
     feuille *leplusproche =dico;
-    ///BUUUUUUUUUUUUUUUUUUUUUUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
     while ((leplusproche!=NULL)&& (strncmp(leplusproche->mot,souschaine,strlen(souschaine))!=0) ){
 
         if (strcmp(leplusproche->mot,souschaine)<0){
@@ -419,10 +434,19 @@ void print (int k,feuille *dico, char * souschaine, int veri)
         if (veri==1){
                 int choix;
                 printf("que voulez vous faire avec ce mot ? \n");
-                printf("1- modifier\n2- supprimer\n3- valider ? \n");
+                printf("1- corriger ce mot\n2- supprimer ce mot\n3- valider ce mot  \n");
                 scanf("%d",&choix);
                 switch (choix){
-                 case 1 : break;
+                 case 1 :{
+                     printf("corrigez le mot : \n");
+                     char nouveau[29];
+                     scanf("%s",&nouveau);
+                     temp= predecesseur(leplusproche);
+                     supprimerMot(&dico,leplusproche->mot);
+                     ajoutMot(&dico,nouveau);
+                     leplusproche=temp;
+                     break;
+                     }
                  case 2 :{
                      temp= predecesseur(leplusproche);
                      supprimerMot(&dico,leplusproche->mot);
