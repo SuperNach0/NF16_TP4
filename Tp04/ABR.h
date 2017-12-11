@@ -31,7 +31,8 @@ void quitter (feuille * racine, FILE * fichier );
 
 void suggestionMots (int k, feuille *dico,char *souschaine);
 
-void print (int k ,feuille *dico, char * souschaine, int veri);
+void print (int k ,feuille *dico, char * souschaine);
+void veridico (int k, feuille ** dico, char * souschaine);
 
 
 #endif // ABR_H_INCLUDED
