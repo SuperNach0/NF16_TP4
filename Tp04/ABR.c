@@ -172,7 +172,8 @@ feuille* rechercherMot2 (feuille **racine, char* mot)
 
 void supprimerMot (feuille **racine, char* mot)
 {
-    feuille * todelete =rechercherMot2(racine,mot);
+    feuille* todelete =rechercherMot(*racine,mot);
+    printf("%s\n", todelete->mot);
     if (todelete == NULL)
     {
         printf("supression : mot introuvable\n");
@@ -188,7 +189,7 @@ void supprimerMot (feuille **racine, char* mot)
                 todelete->right=temp->right;
                 strcpy(todelete->mot,temp->mot);
                 free(temp);
-                ///   printf("supression : il avait 2 fils\n");
+                  /// printf("supression : il avait 2 fils\n");
                 return (void)0;
             }
             else
@@ -207,26 +208,44 @@ void supprimerMot (feuille **racine, char* mot)
             {
                 if (todelete->left==NULL) ///il n'a pas de fils
                 {
-                    ///      printf("il avait 0 fils \n");
+                  //  printf("il avait 0 fils \n");
                     if (todelete->pere->right==todelete) ///c'était un fils gauche ou droit ?
                     {
+                        printf("cetait un fils droit\n");
                         todelete->pere->right=NULL;
+
                     }
                     else
+                    {
+                    //    printf("cetait un fils gauche\n");
                         todelete->pere->left=NULL;
+                        //printf("ici\n");
+                    }
+
                     free(todelete);
+
+                    printf("ici\n");
                     return;
                 }
                 else /// il a un fils gauche
                 {
+                    printf("supression : il avait 1 fils gauche :%s\n",todelete->left->mot);
                     if (todelete->pere->right==todelete)
                     {
+                        printf("c'etait un fdroit\n");
+
                         todelete->pere->right=todelete->left;
+                        todelete->left->pere=todelete->pere;
+
                     }
-                    else
-                        todelete->pere->left=todelete->left;
-                    ///  printf("supression : il avait 1 fils gauche \n");
+                    else{
+                       todelete->pere->left=todelete->left;
+                       todelete->left->pere=todelete->pere;
+                    }
+                     printf("avant free\n");
+                     printf("%s\n",todelete->mot);
                     free(todelete);
+                    todelete=NULL;///au cas ou
                     return;
 
                 }
@@ -237,11 +256,14 @@ void supprimerMot (feuille **racine, char* mot)
                 if (todelete->pere->right==todelete)
                 {
                     todelete->pere->right=todelete->right;
+                    todelete->right->pere=todelete->pere;
                 }
                 else
                     todelete->pere->left=todelete->right;
+                    todelete->right->pere=todelete->pere;
                 ///   printf("supression : il avait 1 fils droit \n");
                 free(todelete);
+                todelete=NULL;///au cas ou
                 return;
 
             }
@@ -426,13 +448,16 @@ void print (int k,feuille *dico, char * souschaine)
 
     if (leplusproche==NULL)
     {
-        leplusproche=successeur(temp);
+        if (strcmp(souschaine,temp->mot)<0)
+            leplusproche=temp;
+        else
+            leplusproche=successeur(temp);
     }
     feuille *max =rechercherMax(dico);
     printf("voici les mots les plus proches :\n");
     while ((leplusproche!=NULL)&&(k!=0))
     {
-        printf("%s\n",leplusproche->mot);
+        printf("%s\n",leplusproche->mot);sleep(0,5);
         k--;
         if (leplusproche==max) return;
         leplusproche=successeur(leplusproche);
@@ -446,6 +471,7 @@ void veridico (int k, feuille ** dico, char * souschaine)
     int lengthmax;
     feuille* temp = *dico;
     feuille* leplusproche = *dico;
+    feuille *max =rechercherMax(*dico);
     while ((leplusproche!=NULL)&& (strncmp(leplusproche->mot,souschaine,strlen(souschaine))!=0) )
     {
 
@@ -466,8 +492,6 @@ void veridico (int k, feuille ** dico, char * souschaine)
     {
         leplusproche=successeur(temp);
     }
-
-    feuille *max =rechercherMax(dico);
 
     while ((leplusproche!=NULL)&&(k!=0))
     {
@@ -492,6 +516,10 @@ void veridico (int k, feuille ** dico, char * souschaine)
         case 2 :
         {
             temp= predecesseur(leplusproche);
+            if (leplusproche==max){
+            supprimerMot(dico,leplusproche->mot);
+            return;
+            }
             supprimerMot(dico,leplusproche->mot);
             leplusproche=temp;
             break;

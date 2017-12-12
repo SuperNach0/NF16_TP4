@@ -18,6 +18,7 @@ feuille* rechercherMin (feuille *racine);
 feuille* rechercherMax (feuille *racine);
 
 feuille* rechercherMot2 (feuille **racine, char* mot);
+
 void supprimerMot (feuille **racine, char* mot);
 
 feuille* successeur (feuille *racine);

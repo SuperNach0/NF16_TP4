@@ -23,7 +23,7 @@ int main()
         perror ( fichier ); /* why didn't the file open? */
     }
 
-    //supprimerMot(&racine,"york");
+
     while (j!= 5)
     {
         printf("#######################################\n");
