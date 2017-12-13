@@ -34,6 +34,7 @@ void suggestionMots (int k, feuille *dico,char *souschaine);
 
 void print (int k ,feuille *dico, char * souschaine);
 void veridico (int k, feuille ** dico, char * souschaine);
+void verimot (feuille ** dico,FILE *fichier);
 
 
 #endif // ABR_H_INCLUDED
