@@ -86,10 +86,10 @@ int main()
 
 
     fclose(fichier);
-}
 
 
 // Partie Bastien
 // fctionTest();
 //return 0;
+}
 
