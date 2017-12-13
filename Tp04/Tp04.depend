@@ -13,7 +13,7 @@
 
 1513158387 c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.h
 
-1513093802 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\main.c
+1513170453 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\main.c
 	<stdio.h>
 	<stdlib.h>
 	"tp4.h"
@@ -27,10 +27,11 @@
 	"AL.h"
 	"ABR.h"
 
-1513093741 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.c
+1513173828 source:c:\users\tertrais.e\documents\utc\nf16\tp4\tp04\abr.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<unistd.h>
 	"tp4.h"
 	"ABR.h"
 

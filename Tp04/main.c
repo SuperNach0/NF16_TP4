@@ -9,6 +9,7 @@ int main()
 {
     feuille* racine = NULL;
     FILE* fichier = NULL;
+    FILE* fichier2 = NULL;
     int i;
     int j = 99 ;
     int k;
@@ -17,6 +18,7 @@ int main()
     if (fichier != NULL)
     {
         ouvrir(&racine,fichier);
+        fclose(fichier);
     }
     else
     {
@@ -45,6 +47,18 @@ int main()
         }
         case 2 :
         {
+            fichier2 = fopen("file.txt", "r+");
+            if (fichier2 != NULL)
+            {
+                verimot(&racine,fichier2);
+                fclose(fichier2);
+            }
+            else
+            {
+                perror ( fichier2 ); /* why didn't the file open? */
+            }
+
+
             break;
         }
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "tp4.h"
 #include "ABR.h"
 
@@ -86,14 +87,14 @@ feuille* rechercherMot (feuille *racine, char* mot)
 {
     if (racine == NULL)
     {
-        printf("mot introuvable retourne NULL \n");
+      //  printf("mot introuvable retourne NULL \n");
         return NULL;
     }
     else
     {
         if (strcmp(racine->mot,mot)==0)
         {
-            printf("mot trouve \n");
+            //printf("mot trouve \n");
             return racine;
         }
         else if (strcmp(racine->mot,mot)<0)
@@ -147,7 +148,7 @@ feuille* rechercherMot2 (feuille **racine, char* mot)
 
     if (*racine == NULL)
     {
-        printf("arbre vide retourne NULL \n");
+      //  printf("arbre vide retourne NULL \n");
         return NULL;
     }
 
@@ -165,7 +166,7 @@ feuille* rechercherMot2 (feuille **racine, char* mot)
                 it= it->right;
             else it=it->left;
         }
-        printf("mot pas trouve NUll ret \n");
+      //  printf("mot pas trouve NUll ret \n");
         return NULL;
     }
 }
@@ -305,6 +306,7 @@ void quitter (feuille * racine, FILE * fichier )
         quitter(racine->left,fichier);
         quitter(racine->right,fichier);
         free(racine);
+
         return;
     }
 
@@ -375,7 +377,7 @@ void suggestionMots (int k, feuille *dico,char *souschaine)
             {
                 leplusproche=temp;
                 lengthmax = i;
-                printf("%s\n",leplusproche->mot);
+                //printf("%s\n",leplusproche->mot);
                 break;
             }
             else if(strncmp(souschaine,temp->mot,i)<0)
@@ -459,7 +461,7 @@ void print (int k,feuille *dico, char * souschaine)
     printf("voici les mots les plus proches :\n");
     while ((leplusproche!=NULL)&&(k!=0))
     {
-        printf("%s\n",leplusproche->mot);sleep(0,5);
+        printf("%s\n",leplusproche->mot);
         k--;
         if (leplusproche==max) return;
         leplusproche=successeur(leplusproche);
@@ -543,16 +545,17 @@ void veridico (int k, feuille ** dico, char * souschaine)
     return;
 }
 
-void verimot (feuille ** dico,FILE *fichier){
-    char line [ 128 ];
+void verimot (feuille ** dico,FILE *fichier2){
+    char ligne [ 128 ];
     int choix = 9;
-    while ( fgets ( line, sizeof line, fichier ) != NULL )  //read a line
+    while ( fgets ( ligne, sizeof ligne, fichier2 ) != NULL )  //read a line
     {
-        line[strlen(line)-1]='\0';///on elève le \n
-        printf("mot lu dans le fichier : %s\n",line);
-        feuille *temp =rechercherMot(*dico,line);
+        ligne[strlen(ligne)-1]='\0';///on elève le \n
+        printf("mot lu dans le fichier : %s\n",ligne);
+        feuille *temp =rechercherMot(*dico,ligne);
         if (temp != NULL){
-            printf("ce mot est deja present dans le dictionnaire \n");
+            printf("ce mot est deja present dans le dictionnaire, on passe au suivant. \n");
+           // fprintf(fichier2,"%s\n",line);
         }
         else {
             printf("ce mot n'existe pas dans le dico, que voulez vous faire ? \n");
@@ -560,11 +563,17 @@ void verimot (feuille ** dico,FILE *fichier){
             printf("2 - ajouter ce mot dans le dictionnaire\n");
             scanf("%d",&choix);
             if (choix == 2) {
-                ajoutMot(dico,line);
+                ajoutMot(dico,ligne);
             }
             else if (choix ==1){
-                suggestionMots(4,*dico,line);
-            }
+                char newmot[30];
+                printf("\n\n");
+                printf("\nvoici des suggestions : \n");
+                suggestionMots(4,*dico,ligne);
+                printf("\nremplacez le mot : \n");
+                scanf("%s",&newmot);
+                fprintf(fichier2,"%s\n",newmot);
+                }
 
         }
 
