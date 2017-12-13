@@ -23,3 +23,4 @@ Dico supprimeMot2(Mot mot, Dico dico);
 
 void fctionTest();
 #endif // AL_H_INCLUDED
+

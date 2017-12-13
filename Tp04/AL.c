@@ -268,40 +268,37 @@ Dico ajoutMot2(Mot mot, Dico *dico){
     }
     return *dico;
 }
-Dico recsupprimeMot2(Mot mot, Dico dico){
-    if(dico->c == '$'){
-        Dico new;
-        new = dico->alt;
-        return new;
-    }
-    else{
-        Dico iterat = dico;
-        while(iterat->c != mot.c){
-            iterat = iterat->succ;
+Dico recsupprimeMot2(Mot* mot, Dico dico){
+    Dico it = dico;
+    if(it->c == '$'){
+        if(it->alt != NULL){
+            return it->alt;
         }
-        
-        iterat->succ = recsupprimeMot2(*mot.suivant,iterat->succ);
-        
-        if (iterat->succ == NULL){
-            return iterat->alt;
-        }else
-        {
-            return iterat;
-        }
+        return NULL;
     }
+    
+    while (it->c != mot->c){
+        it = it->alt;
+    }
+        
+    Dico suiv = recsupprimeMot2(mot->suivant, it->succ);
+    if(suiv == NULL){
+        free(it->succ);
+        return it->alt;
+    }
+    it->succ = suiv;
+    return it;
 }
 
 Dico supprimeMot2(Mot mot, Dico dico){
     
     if(rechercheMot2(mot, dico)){
-        Dico ret = recsupprimeMot2(mot,dico);
-        return ret;
+        dico = recsupprimeMot2(&mot,dico);
     }
     else{
         printf("[supprimeMot2 : Information] : Ce mot n'est pas dans le dictionnaire, dictionnaire renvoyé sans modifications\n");
-        return dico;
     }
-    
+    return dico;
 }
 
 // Ajoute la lettre au mot
@@ -375,90 +372,104 @@ Mot creerMotString(char* string){ // Transforme un string en mot: TEST OK
     return new;
 }
 void fctionTest(){
-
-
-
-    //On fait des tests:
-    const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    Dico ledico = NULL;
-    int nbmots = 50000;
-    Mot tableauMots[50000];
-    int i,j,k,indice;
-
-    srand((int)time(NULL));
-
-    //On essaie de créer un mot:
-    printf("\n############################\n");
-    printf("[ESSAI 0] On essaie de créer les mots\n");
-    for(i=0;i<nbmots;i++){
-        tableauMots[i] = *creerMot('$', NULL);
-    }
-    printf("[ESSAI 0] Reussi !\n");
-    printf("############################\n");
-    printf("\n############################\n");
-//    printf("[ESSAI 1] On essaie d'ajouter une lettre à un mot\n");
-//    ajouterLettreMot(&tableauMots[0], 'C');
-//    printf("[ESSAI 1] Reussi !\n");
+    
+    Dico leDico = NULL;
+    Mot monmot = creerMotString("SALUT");
+    
+    leDico= initDico2(&leDico, monmot);
+    
+    printAL(leDico);
+    
+    printf("###########\n");
+    leDico = supprimeMot2(monmot, leDico);
+    printf("###########\n");
+    printf("\n%d",rechercheMot2(monmot, leDico));
+    
+    
+    
+    
+//
+//
+//
+//    //On fait des tests:
+//    const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//    Dico ledico = NULL;
+//    int nbmots = 2000;
+//    Mot tableauMots[2000];
+//    int i,j,k,indice;
+//
+//    srand((int)time(NULL));
+//
+//    //On essaie de créer un mot:
+//    printf("\n############################\n");
+//    printf("[ESSAI 0] On essaie de créer les mots\n");
+//    for(i=0;i<nbmots;i++){
+//        tableauMots[i] = *creerMot('$', NULL);
+//    }
+//    printf("[ESSAI 0] Reussi !\n");
 //    printf("############################\n");
 //    printf("\n############################\n");
-//    printf("[ESSAI 2] On essaie d'afficher cette lettre");
+////    printf("[ESSAI 1] On essaie d'ajouter une lettre à un mot\n");
+////    ajouterLettreMot(&tableauMots[0], 'C');
+////    printf("[ESSAI 1] Reussi !\n");
+////    printf("############################\n");
+////    printf("\n############################\n");
+////    printf("[ESSAI 2] On essaie d'afficher cette lettre");
+////    afficherMot(tableauMots[0]);
+////    printf("[ESSAI 2] Reussi !\n");
+////    printf("############################\n");
+//    printf("\n############################\n");
+//    printf("[ESSAI 3] On essaie de créer plein de mots\n");
+//    for(i=0;i<nbmots;i++){
+//       k=rand() % (10) + 1;
+//        for(j=0;j<k;j++){
+//            indice = rand() % (25 + 1);
+//            ajouterLettreMot(&tableauMots[i], alphabet[indice]) ;
+//            printf(" - [ESSAI 3] Essai mot num %d : lettre %d \n",i,j);
+//        }
+//        afficherMot(tableauMots[i]);
+//    }
+//    printf("[ESSAI 3] Reussi !\n");
+//    printf("\n############################\n");
+//    printf("[ESSAI 4] On essaie d'initialiser le dico avec le mot : ");
 //    afficherMot(tableauMots[0]);
-//    printf("[ESSAI 2] Reussi !\n");
+//    initDico2(&ledico, tableauMots[0]);
+//    printf("[ESSAI 4] Reussi !\n");
 //    printf("############################\n");
-    printf("\n############################\n");
-    printf("[ESSAI 3] On essaie de créer plein de mots\n");
-    for(i=0;i<nbmots;i++){
-       k=rand() % (10) + 1;
-        for(j=0;j<k;j++){
-            indice = rand() % (25 + 1);
-            ajouterLettreMot(&tableauMots[i], alphabet[indice]) ;
-            printf(" - [ESSAI 3] Essai mot num %d : lettre %d \n",i,j);
-        }
-        afficherMot(tableauMots[i]);
-    }
-    printf("[ESSAI 3] Reussi !\n");
-    printf("\n############################\n");
-    printf("[ESSAI 4] On essaie d'initialiser le dico avec le mot : ");
-    afficherMot(tableauMots[0]);
-    initDico2(&ledico, tableauMots[0]);
-    printf("[ESSAI 4] Reussi !\n");
-    printf("############################\n");
+////    printf("\n############################\n");
+////    printf("[ESSAI 5] On essaie d'afficher le Dico\n");
+////    printAL(ledico);
+////    printf("[ESSAI 5] Reussi !\n");
+////    printf("############################\n");
 //    printf("\n############################\n");
-//    printf("[ESSAI 5] On essaie d'afficher le Dico\n");
+//    printf("[ESSAI 6] On essaie de remplir le Dico\n");
+//    for(i=0;i<nbmots;i++){
+//        ledico = ajoutMot2(tableauMots[i], &ledico);
+//    }
+//    int g = 1;
+//    for(i=0;i<nbmots;i++){
+//        ledico = supprimeMot2(tableauMots[i], ledico);
+//    }
 //    printAL(ledico);
-//    printf("[ESSAI 5] Reussi !\n");
-//    printf("############################\n");
-    printf("\n############################\n");
-    printf("[ESSAI 6] On essaie de remplir le Dico\n");
-    for(i=0;i<nbmots;i++){
-        ledico = ajoutMot2(tableauMots[i], &ledico);
-    }
-    int g = 1;
-    for(i=0;i<nbmots;i++){
-        if ((rechercheMot2(tableauMots[i], ledico))==0){
-            g = 0;
-        }
-    }
-    printAL(ledico);
-
-    if(g==0){printf("Fail\n");}
-    else{printf("OUII\n");}
-
-    printf("[ESSAI 6] Reussi !\n");
-    printf("############################\n");
-//    printf("\n############################\n");
-//    printf("[ESSAI 6] On essaie de trouver le prefixe d'un mot'");
-//    Dico prefixe = prefixeMot(ledico, tableauMots[0]);
-//    afficherTousLesMots(prefixe);
+//
+//    if(g==0){printf("Fail\n");}
+//    else{printf("OUII\n");}
+//
 //    printf("[ESSAI 6] Reussi !\n");
 //    printf("############################\n");
+////    printf("\n############################\n");
+////    printf("[ESSAI 6] On essaie de trouver le prefixe d'un mot'");
+////    Dico prefixe = prefixeMot(ledico, tableauMots[0]);
+////    afficherTousLesMots(prefixe);
+////    printf("[ESSAI 6] Reussi !\n");
+////    printf("############################\n");
+////
 //
-
-    //on crée nbmots mots
-    //on les ajoute dans l'arbre
-
-
-//    afficherTousLesMots(ledico);
+//    //on crée nbmots mots
+//    //on les ajoute dans l'arbre
+//
+//
+////    afficherTousLesMots(ledico);
 }
 
 
