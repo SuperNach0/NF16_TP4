@@ -187,6 +187,7 @@ void supprimerMot (feuille **racine, char* mot)
             if (temp==todelete->right)
             {
                 todelete->right=temp->right;
+                temp->right->pere=todelete;
                 strcpy(todelete->mot,temp->mot);
                 free(temp);
                   /// printf("supression : il avait 2 fils\n");
@@ -196,6 +197,7 @@ void supprimerMot (feuille **racine, char* mot)
             {
                 strcpy(todelete->mot,temp->mot);
                 temp->pere->left=temp->right;
+                temp->right->pere=temp->pere;
                 free(temp);
                 ///     printf("supression : il avait 2 fils\n");
                 return (void)0;
@@ -539,6 +541,33 @@ void veridico (int k, feuille ** dico, char * souschaine)
         leplusproche=successeur(leplusproche);
     }
     return;
+}
 
+void verimot (feuille ** dico,FILE *fichier){
+    char line [ 128 ];
+    int choix = 9;
+    while ( fgets ( line, sizeof line, fichier ) != NULL )  //read a line
+    {
+        line[strlen(line)-1]='\0';///on elève le \n
+        printf("mot lu dans le fichier : %s\n",line);
+        feuille *temp =rechercherMot(*dico,line);
+        if (temp != NULL){
+            printf("ce mot est deja present dans le dictionnaire \n");
+        }
+        else {
+            printf("ce mot n'existe pas dans le dico, que voulez vous faire ? \n");
+            printf("1 - remplacer ce mot dans le fichier \n");
+            printf("2 - ajouter ce mot dans le dictionnaire\n");
+            scanf("%d",&choix);
+            if (choix == 2) {
+                ajoutMot(dico,line);
+            }
+            else if (choix ==1){
+                suggestionMots(4,*dico,line);
+            }
+
+        }
+
+    }
 
 }
