@@ -546,6 +546,7 @@ void veridico (int k, feuille ** dico, char * souschaine)
 }
 
 void verimot (feuille ** dico,FILE *fichier2){
+    feuille* abr2 = NULL;
     char ligne [ 128 ];
     int choix = 9;
     while ( fgets ( ligne, sizeof ligne, fichier2 ) != NULL )  //read a line
@@ -555,7 +556,7 @@ void verimot (feuille ** dico,FILE *fichier2){
         feuille *temp =rechercherMot(*dico,ligne);
         if (temp != NULL){
             printf("ce mot est deja present dans le dictionnaire, on passe au suivant. \n");
-           // fprintf(fichier2,"%s\n",line);
+            ajoutMot(&abr2,ligne);
         }
         else {
             printf("ce mot n'existe pas dans le dico, que voulez vous faire ? \n");
@@ -564,6 +565,7 @@ void verimot (feuille ** dico,FILE *fichier2){
             scanf("%d",&choix);
             if (choix == 2) {
                 ajoutMot(dico,ligne);
+                ajoutMot(&abr2,ligne);
             }
             else if (choix ==1){
                 char newmot[30];
@@ -572,10 +574,11 @@ void verimot (feuille ** dico,FILE *fichier2){
                 suggestionMots(4,*dico,ligne);
                 printf("\nremplacez le mot : \n");
                 scanf("%s",&newmot);
-                fprintf(fichier2,"%s\n",newmot);
+                ajoutMot(&abr2,newmot);
                 }
 
         }
+        quitter(abr2,fichier2);
 
     }
 

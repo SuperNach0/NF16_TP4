@@ -47,7 +47,7 @@ int main()
         }
         case 2 :
         {
-            fichier2 = fopen("file.txt", "r+");
+            fichier2 = fopen("file.txt", "w+");
             if (fichier2 != NULL)
             {
                 verimot(&racine,fichier2);
