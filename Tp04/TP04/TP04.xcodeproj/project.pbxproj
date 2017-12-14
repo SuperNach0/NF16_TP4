@@ -25,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A00D30E1FE29D9F00D095AB /* dicoErwan.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = dicoErwan.txt; path = ../dicoErwan.txt; sourceTree = "<group>"; };
 		5A3375BD1FD1626900563CCF /* TP04 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TP04; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3375C71FD162A800563CCF /* tp4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tp4.h; path = ../../tp4.h; sourceTree = "<group>"; };
 		5A3375C81FD162A800563CCF /* tp4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tp4.c; path = ../../tp4.c; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		5A3375B41FD1626900563CCF = {
 			isa = PBXGroup;
 			children = (
+				5A00D30E1FE29D9F00D095AB /* dicoErwan.txt */,
 				5A3375BF1FD1626900563CCF /* TP04 */,
 				5A3375BE1FD1626900563CCF /* Products */,
 			);

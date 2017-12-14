@@ -51,7 +51,6 @@ Dico initDico2(Dico *dico, Mot mot){
     
         // Ensuite on parcours le mot, et pour chaque lettre on crée une cellule, que l'on rattache à la cellule d'avant
         while (iteraMot!=NULL){
-            printf("[initDico2 : Information] : Ajout de la lettre %c\n", iteraMot->c);
             iteraCell->succ = creerCellule(iteraMot->c, NULL, NULL);
             iteraCell = iteraCell->succ;
             iteraMot = iteraMot->suivant;
@@ -59,7 +58,7 @@ Dico initDico2(Dico *dico, Mot mot){
         
         // On fini le mot par un $, que l'on rattache
         iteraCell->succ = creerCellule('$', NULL, NULL);
-        printf("[initDico2 : Information] : Dictionnaire initialise avec le mot passé en paramètre \n");
+        printf("[initDico2 : Information] : Dictionnaire initialise ! \n");
     }
     
     return *dico;
@@ -84,12 +83,12 @@ Dico prefixeMot(Dico dico, Mot mot){
             prefixe = iteraCell; //On stocke la cellule en tant de début du nouveau dico
             iteraCell = iteraCell->succ;
             if((monMot=monMot->suivant)==NULL){
-                printf("[prefixeMot : Information] : Prefixe trouve (mot entier) !\n");
+                printf("[prefixeMot : Information] : Prefixe trouve !\n");
                 b=0;
             } // Si la prochaine lettre dans le mot est NULL on arrête
         }
         else{//Sinon on arrête, on a trouvé le prefixe (lettre trouvée différente)
-                printf("[prefixeMot : Information] : Prefixe trouve (plus correspondances) !\n");
+                printf("[prefixeMot : Information] : Prefixe trouve !\n");
             b=0;
         }
     }
@@ -116,12 +115,12 @@ int rechercheMot2(Mot mot, Dico dico){
             prefixe = iteraCell; //On stocke la cellule en tant de début du nouveau dico
             iteraCell = iteraCell->succ;
             if((monMot=monMot->suivant)==NULL){
-                printf("[prefixeMot : Information] : Prefixe trouve (mot entier) !\n");
+                printf("[prefixeMot : Information] : Prefixe trouve  !\n");
                 b=0;
             } // Si la prochaine lettre dans le mot est NULL on arrête
         }
         else{//Sinon on arrête, on a trouvé le prefixe (lettre trouvée différente)
-            printf("[prefixeMot : Information] : Prefixe trouve (plus correspondances) !\n");
+            printf("[prefixeMot : Information] : Prefixe trouve!\n");
             b=0;
         }
     }
@@ -136,13 +135,13 @@ int rechercheMot2(Mot mot, Dico dico){
 
 // Ajoute le mot passé en paramètre au dictionnaire pointé en paramètre
 Dico ajoutMot2(Mot mot, Dico *dico){
-    if(rechercheMot2(mot,*dico)){
-        printf("[ajoutMot2 : Information] : Ce mot est deja dans le dictionnaire, dictionnaire inchange renvoye\n");
-        return *dico;
-    }
-    else if(dico == NULL){
+    if(dico == NULL){
         printf("[ajoutMot2 : Information] : Dictionnaire vide, on l'initialise avec le mot passe en parametre\n");
         return initDico2(dico, mot);
+    }
+    else if(rechercheMot2(mot,*dico)){
+        printf("[ajoutMot2 : Information] : Ce mot est deja dans le dictionnaire, dictionnaire inchange renvoye\n");
+        return *dico;
     }
     else{
         // VARIABLES //
@@ -365,7 +364,6 @@ void afficherMot(Mot mot){ // Affiche un mot: TEST OK
     }
 }
 
-
 // Partie recursive de la fonction suivante
 void printALrec(Dico dico, Mot mot){
     Dico iterator = dico;
@@ -475,7 +473,7 @@ int recsuggestionMot2(int k, Dico dico, Mot * souschaine, Mot mot, int n){
         while ((iterator != NULL)&&((i+n)<k)){
                 if(iterator->c == '$'){
                     afficherMot(mot);
-                    printf("\n");
+                    printf(", ");
                     i = i+1;
                 }
                 else if ((souschaine==NULL)||((souschaine != NULL)&&(iterator->c != souschaine->c))){
@@ -614,112 +612,185 @@ void veridico2(Dico dico){
     
 }
 
+Dico loadFileAL(char * nomFichier){
+    FILE * fichier = fopen(nomFichier, "r");
+    Dico dico = NULL;
+    char currentCar = 0;
+    Mot * currentMot = creerMot('$', NULL);
+    if(fichier != NULL){
+        do{
+            currentCar = fgetc(fichier);
+            if(((currentCar == '\n' )||(currentCar == EOF)||(currentCar == '\r'))&&(currentMot->c != '$')){
+                if(dico != NULL){
+                    dico = ajoutMot2(*currentMot, &dico);
+                    currentMot = creerMot('$', NULL);
+                }
+                else{
+                    dico = initDico2(&dico, *currentMot);
+                    currentMot = creerMot('$', NULL);
+                }
+            }
+            else if ((currentCar != '\n' )&&(currentCar != EOF)&&(currentCar != '\r')){
+                    ajouterLettreMot(currentMot, currentCar);
+                
+            }
+        }while(currentCar != EOF);
+        fclose(fichier);
+    }
+    else{
+        printf("[loadFileAL : ERREUR] : Impossible d'ouvrir le fichier '%s' \n",nomFichier);
+    }
 
-void fctionTest(){
-    
-    
-    
-    
-    
-    
-    Dico leDico;
-    leDico = initDico2(&leDico, creerMotString("Bonjour"));
-    leDico = ajoutMot2(creerMotString("Bonjor"), &leDico);
-    leDico = ajoutMot2(creerMotString("Bonjar"), &leDico);
-    leDico = ajoutMot2(creerMotString("Bonjir"), &leDico);
-    leDico = ajoutMot2(creerMotString("Bonjior"), &leDico);
-    leDico = ajoutMot2(creerMotString("Bonjazzzr"), &leDico);
-    leDico = ajoutMot2(creerMotString("Boncar"), &leDico);
-    leDico = ajoutMot2(creerMotString("Bonzar"), &leDico);
-    leDico = ajoutMot2(creerMotString("Es"), &leDico);
-    leDico = ajoutMot2(creerMotString("EE"), &leDico);
-    veridico2(leDico);
-//    printf("suppression\n");
-//    leDico = supprimeMot2(creerMotString("EE"), leDico);
-//    printf("FIN\n");
-//    leDico = ajoutMot2(creerMotString("YOUU"), &leDico);
-  printAL(leDico);
-////
-//
-//
-//
-//    //On fait des tests:
-//    const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//    Dico ledico = NULL;
-//    int nbmots = 2000;
-//    Mot tableauMots[2000];
-//    int i,j,k,indice;
-//
-//    srand((int)time(NULL));
-//
-//    //On essaie de créer un mot:
-//    printf("\n############################\n");
-//    printf("[ESSAI 0] On essaie de créer les mots\n");
-//    for(i=0;i<nbmots;i++){
-//        tableauMots[i] = *creerMot('$', NULL);
-//    }
-//    printf("[ESSAI 0] Reussi !\n");
-//    printf("############################\n");
-//    printf("\n############################\n");
-////    printf("[ESSAI 1] On essaie d'ajouter une lettre à un mot\n");
-////    ajouterLettreMot(&tableauMots[0], 'C');
-////    printf("[ESSAI 1] Reussi !\n");
-////    printf("############################\n");
-////    printf("\n############################\n");
-////    printf("[ESSAI 2] On essaie d'afficher cette lettre");
-////    afficherMot(tableauMots[0]);
-////    printf("[ESSAI 2] Reussi !\n");
-////    printf("############################\n");
-//    printf("\n############################\n");
-//    printf("[ESSAI 3] On essaie de créer plein de mots\n");
-//    for(i=0;i<nbmots;i++){
-//       k=rand() % (10) + 1;
-//        for(j=0;j<k;j++){
-//            indice = rand() % (25 + 1);
-//            ajouterLettreMot(&tableauMots[i], alphabet[indice]) ;
-//            printf(" - [ESSAI 3] Essai mot num %d : lettre %d \n",i,j);
-//        }
-//        afficherMot(tableauMots[i]);
-//    }
-//    printf("[ESSAI 3] Reussi !\n");
-//    printf("\n############################\n");
-//    printf("[ESSAI 4] On essaie d'initialiser le dico avec le mot : ");
-//    afficherMot(tableauMots[0]);
-//    initDico2(&ledico, tableauMots[0]);
-//    printf("[ESSAI 4] Reussi !\n");
-//    printf("############################\n");
-////    printf("\n############################\n");
-////    printf("[ESSAI 5] On essaie d'afficher le Dico\n");
-////    printAL(ledico);
-////    printf("[ESSAI 5] Reussi !\n");
-////    printf("############################\n");
-//    printf("\n############################\n");
-//    printf("[ESSAI 6] On essaie de remplir le Dico\n");
-//    for(i=0;i<nbmots;i++){
-//        ledico = ajoutMot2(tableauMots[i], &ledico);
-//    }
-//    int g = 1;
-//    printALFILTRE(ledico, nbMots);
-//
-//    if(g==0){printf("Fail\n");}
-//    else{printf("OUII\n");}
-//
-//    printf("[ESSAI 6] Reussi !\n");
-//    printf("############################\n");
-////    printf("\n############################\n");
-////    printf("[ESSAI 6] On essaie de trouver le prefixe d'un mot'");
-////    Dico prefixe = prefixeMot(ledico, tableauMots[0]);
-////    afficherTousLesMots(prefixe);
-////    printf("[ESSAI 6] Reussi !\n");
-////    printf("############################\n");
-////
-//
-//    //on crée nbmots mots
-//    //on les ajoute dans l'arbre
-//
-//
-////    afficherTousLesMots(ledico);
+    return dico;
 }
+ListeMot * loadFileListe(char * nomFichier){
+    FILE * fichier = fopen(nomFichier, "r");
+    ListeMot * dico = (ListeMot*)malloc(sizeof(ListeMot));
+    dico->mot = NULL;
+    dico->suivant = NULL;
+    
+    ListeMot * iter = dico;
+    
+    char currentCar = 0;
+    char * currentMot = (char*) malloc(sizeof(char)*50);
+    int i = 0;
+    if(fichier != NULL){
+        do{
+            currentCar = fgetc(fichier);
+            if(((currentCar == '\n' )||(currentCar == EOF)||(currentCar == '\r'))&&(i != 0)){
+                    currentMot[i] = 0;
+                    iter->mot = currentMot;
+                    currentMot = malloc(sizeof(char)*100);
+                    iter->suivant =(ListeMot*)malloc(sizeof(ListeMot));
+                    iter = iter->suivant;
+                    iter->mot = NULL;
+                    iter->suivant = NULL;
+                    i=0;
+            }
+            else if ((currentCar != '\n' )&&(currentCar != EOF)&&(currentCar != '\r')&&(currentCar != '\0')){
+                currentMot[i] = currentCar;
+                i++;
+            }
+        }while(currentCar != EOF);
+    }
+    else{
+        printf("[loadFileListe : ERREUR] : Impossible d'ouvrir le fichier '%s' \n",nomFichier);
+    }
+    
+    return dico;
+}
+void writeMot(Mot mot, FILE * fichier){
+    Mot * it = &mot;
+    while(it!=NULL){
+        fputc(it->c, fichier);
+        it=it->suivant;
+    }
+    fputc('\n', fichier);
+}
+void writeFileALrec(FILE * fichier, Dico dico, Mot mot){
+    Dico iterator = dico;
+    while (iterator != NULL){
+        if(iterator->c == '$'){
+            writeMot(mot, fichier);
+        }
+        else{
+            Mot new;
+            //        printf("Lettre: %c \n", iterator->c);
+            cpMots(&new, mot);
+            ajouterLettreMot(&new, iterator->c);
+            printALrec(iterator->succ, new);
+        }
+        iterator=iterator->alt;
+    }
+}
+void writeFileAL(char * nomFichier, Dico dico){
+    // On écrase le fichier
+    FILE * fichier = fopen(nomFichier, "w+");
+    if(fichier != NULL){
+        Mot new = *creerMot('$', NULL);
+        writeFileALrec(fichier, dico, new);
+        fclose(fichier);
+    }
+}
+void writeFileListe(char * nomFichier, ListeMot * liste){
+    FILE * fichier = fopen(nomFichier, "w+");
+    ListeMot * it = liste;
+    int i;
+    while (it->mot != NULL) {
+        i=0;
+        while (it->mot[i] != '\0'){
+            fputc(it->mot[i], fichier);
+            i++;
+        }
+        fputc('\n',fichier);
+        it=it->suivant;
+    }
+    
+    fclose(fichier);
+}
+
+void verimot2(Dico dico){
+    printf("\n############################");
+    printf("\n####### - VERIMOT - ########");
+    printf("\n############################");
+    printf("\n\n");
+    printf("[verimot2 : Information] : Chargement du fichier 'file.txt' \n");
+    ListeMot * file = loadFileListe("file.txt");
+    ListeMot * it = file;
+    Mot mot;
+    printf("[verimot2 : Information] : Fin de chargement du fichier 'file.txt' \n");
+    printf("[verimot2 : Information] : Début traitement des mots du fichier \n");
+    char * nouveau = malloc(sizeof(char)*31);
+    while(it->mot != NULL){
+        mot = creerMotString(it->mot);
+        if(rechercheMot2(mot, dico)==0){
+            int rep;
+            int boole;
+            
+            do{
+                printf("\nMot : %s",it->mot);
+                printf("\n Que souhaitez vous faire ?\n");
+                printf("1-Remplacer dans le fichier \n2-Ajouter dans le dictionnaire\n");
+                
+                
+                printf("\nChoix :");
+                scanf("%d",&rep);
+                printf("\n");
+                boole = 0;
+                switch (rep) {
+                    case 1:
+                        printf("Proposition de modification :\n ");
+                        suggestionMot2(4, dico, mot);
+                        printf("\n");
+                        printf("Rentrez le mot corrigé (max. 30 lettres) : ");
+                        viderBuffer();
+                        scanf("%s", nouveau);
+                        it->mot = nouveau;
+                        nouveau = malloc(sizeof(char)*31);
+                        printf("\nMOT CORRIGE !\n");
+                        break;
+                    case 2:
+                        dico = ajoutMot2(mot, &dico);
+                        printf("\nMOT AJOUTE AU DICO!");
+                        printf("\n");
+                        printf("\n");
+                        break;
+                    default:
+                        boole = 1;
+                        break;
+                }
+            }while(boole);
+            
+        }
+        it=it->suivant;
+    }
+    
+    printf("[verimot2 : Information] : Fin de traitement des mots du fichier \n");
+    printf("[verimot2 : Information] : Debut reecriture du fichier \n");
+    writeFileListe("file.txt",file);
+    printf("[verimot2 : Information] : Fin reecriture du fichier \n");
+}
+
 
 
 
