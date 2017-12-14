@@ -15,6 +15,7 @@ abaissai
 abacule
 abaca
 a
+DEBUT
 abaissable
 abaissais
 abaisse
@@ -2622,8 +2623,8 @@ anticonformiste
 anticonformisme
 antidiagonale
 anticryptogamique
-anticonstitutionnell(Yh
-anticonstitutionnellˆ]h
+anticonstitutionnellàA»(@»D»}ï¿½ï¿½ï¿½o
+anticonstitutionnellhA»
 anticorpuscule
 anticorps
 antidate
@@ -2646,7 +2647,7 @@ antiglisse
 antigel
 antigouvernementale
 antimonarchique
-antigravitationnelleZh
+antigravitationnelle°ª»
 antimilitariste
 antilogarithme
 antihistaminique
@@ -4280,9 +4281,9 @@ autorail
 autorisais
 autorisai
 avertie
-autosuggestionnerons0ƒià‡i`ŠiÂH§¡
+autosuggestionneronsh–¼ø—¼€÷¼~@2~ï¿½Hï¿½ï¿½
 autorise
-autosuggestionnassieà‡iè‰iğ†išIŸ 
+autosuggestionnassieø—¼ •¼Pú¼~Pï¿½~ï¿½?ï¿½
 autosuffisance
 autoriserai
 autoriser
@@ -4293,11 +4294,11 @@ autosatisfaction
 autoroute
 autoscopie
 autosuggestion
-autosuggestionnerionĞˆi¨ˆi
-autosuggestionneriezğ†i@‡i
+autosuggestionnerionà–¼Øù¼
+autosuggestionneriezPú¼èø¼
 autosuggestionnerez
 autosuggestionner
-autosuggestionnassiop‰i
+autosuggestionnassio ú¼
 avaloir
 autrui
 autrichienne
@@ -11474,18 +11475,18 @@ consterne
 constipais
 constipai
 consternerai
-constipation
+ï¿½f9'k
 constiper
 constipe
 constitue
 constituais
 constituer
-constitutionnalisaispÔl Öl
+constitutionnalisais89À¸;À
 constitutionnalisai
 constitutive
-constitutionnaliseraˆÕl(ÖlPÖlíh|
+constitutionnalisera(:À€<ÀĞ<Àï¿½hï¿½ï¿½f9'k
 constitutionnaliser
-constitutionnellemen×lXØl
+constitutionnellemen<À
 constitutionnelle
 construction
 constructible
@@ -23852,7 +23853,7 @@ inconfortablement
 incompressible
 inconcevable
 incomprise
-inconditionnellement v¸vàv;â
+inconditionnellementPpÈXrÈÀsÈï¿½ï¿½pï¿½Gï¿½ï¿½
 inconditionnelle
 inconcevablement
 inconciliable
@@ -23883,7 +23884,7 @@ indemnitaire
 incontinente
 incontinence
 inconstructible
-inconstitutionnellem˜v
+inconstitutionnellem°§Ò
 incontestablement
 incontestable
 inconvenance
@@ -24579,21 +24580,21 @@ instillerai
 instiller
 instinctuelle
 instinctivement
-instinctive
+¿½Iï¿½
 instituerai
 institue
 instituais
 instituai
-instituer
 institutes
 institutionnaliser
-institutionnalisatio°u(€u€‚u†à
+institutionnalisatio€
+ÒÀÒÈÒ½ ï¿½ï¿½Iï¿½
 institutionnalisais
 institutionnalise
 instruire
 instruction
 institutionnelle
-institutionnaliseraiø‚u
+institutionnaliseraiÒ
 institutionnalisme
 institutrice
 instructive
@@ -24773,7 +24774,7 @@ interfolie
 interfoliais
 interjetterai
 interjette
-intergouvernementale¸Ÿu8u˜œu¥6
+intergouvernementaleX(Ò0(Òˆ%Ò½ï¿½
 interglaciaire
 interfolierai
 interjetai
@@ -24810,7 +24811,7 @@ internais
 internat
 internationalisai
 internationalisais
-internationalisationØ¢u
+internationalisationH)Ò
 internement
 internationaliserai
 internationaliser
@@ -24844,7 +24845,7 @@ interpoler
 interposais
 interrelation
 interpose
-interprofessionnelleˆ§u0ªu
+interprofessionnelle/Ò€2Ò
 interposer
 interposition
 interposerai
@@ -36687,7 +36688,7 @@ radiocompas
 radiocommunication
 radiocobalt
 radioconducteur
-radiocristallographiÀĞä
+radiocristallographi(XÙ
 radoucis
 radioscopie
 radioprotection
@@ -42022,7 +42023,7 @@ socialiserai
 socialiser
 socialiste
 sociatrie
-socioprofessionnelle˜ZéPWé
+socioprofessionnelleòÜ`ğÜ
 sociogramme
 socioculturelle
 sociodrame
@@ -44757,7 +44758,7 @@ techniserai
 techniser
 technocratie
 technocrate
-technobureaucratiqueØEê
+technobureaucratiquehjŞ
 technocratise
 technocratisation
 technocratisais
@@ -45313,6 +45314,7 @@ toiler
 toilerie
 toilettais
 toilettai
+¿½Iï¿½
 vivendi
 tontinerai
 tommette
@@ -48843,3 +48845,4 @@ zymase
 zygote
 zymotechnie
 zythum
+ï¿½ï¿½ï¿½

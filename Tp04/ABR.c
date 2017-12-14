@@ -377,6 +377,7 @@ void suggestionMots (int k, ABR dico,char *souschaine)
         while (temp!=NULL)
         {
 
+
             if (strncmp(souschaine,temp->mot,i)==0)
             {
                 leplusproche=temp;
@@ -387,6 +388,7 @@ void suggestionMots (int k, ABR dico,char *souschaine)
                 //printf("%s\n",leplusproche->mot);
                 break;
             }
+
             else if(strncmp(souschaine,temp->mot,i)<0)
                 temp=temp->left;
             else if (strncmp(souschaine,temp->mot,i)>0)
@@ -401,37 +403,47 @@ void suggestionMots (int k, ABR dico,char *souschaine)
     // printf("suggestion : %s\n  sa longueur de sous chaine %d\n",leplusproche->mot,lengthmax);
     ///ICI on a la première occurence de la sous chaine (la plus grade trouvée)
     /// il faut chercher dans son sous arbre GAUCHE si il n'y a pas mieux !!
-
+    int z=0;
     for (i=j-1; i>=0; i--)
     {
         temp=sauvegarde[i];
         lengthmax=Lmax[i];
+
+        if (strcmp(temp,souschaine)!=0){
         while(strncmp(predecesseur(temp),temp,lengthmax)==0)
         {
             temp=predecesseur(temp);
         }
         leplusproche=temp;
-
-        if (k<=1)
+        }
+        if (k<1)
         {
             printf("fin des suggestion\n");
             return;
         }
 
-        printf(" \n %s\n",leplusproche->mot);///c'est lui le plus proche !
-        k--;
 
-        ABR  suc = successeur(leplusproche);
+
+
+
+        ABR  suc = leplusproche;
         while ((k!=0)&&(strncmp(suc->mot,souschaine,lengthmax)==0))
         {
-            //if (strncmp(suc->mot,souschaine,lengthmax+1)!=0)
+            if (z>0){
+            if (strncmp(suc->mot,souschaine,lengthmax+1)!=0)
             {
                 printf("%s\n",suc->mot);
-                suc=successeur(suc);
                 k--;
             }
+            }
+            else{
+                printf("%s\n",suc->mot);
+                k--;
+            }
+            suc=successeur(suc);
 
         }
+        z++;
     }
 
 
@@ -453,27 +465,22 @@ void print (int k,ABR dico, char * souschaine)
             temp=leplusproche;
             leplusproche=leplusproche->right;
         }
-
         else if (strcmp(leplusproche->mot,souschaine)>0)
         {
             temp=leplusproche;
             leplusproche=leplusproche->left;
-
         }
     }
     if (leplusproche!=NULL){
-    printf("TEST : %s\n",leplusproche->mot);
-    //afficherArbre(leplusproche->left);
     temp=leplusproche;
-    while(temp!=NULL)
+    if (strcmp(temp,souschaine)!=0){
+        while(strncmp(predecesseur(temp),temp,strlen(souschaine))==0)
         {
-            if (strncmp(temp->mot,souschaine,strlen(souschaine))==0) ///c'est plus petit et a aussi la sous chaine
-            {
-                leplusproche=temp;
-            }
-            temp=temp->left;
+            temp=predecesseur(temp);
+        }
         }
     }
+    leplusproche=temp;
     //printf("\nhihi\n");
 
     if (leplusproche==NULL)
@@ -587,7 +594,7 @@ void verimot (ABR * dico)
         while ( fgets ( ligne, sizeof ligne, fichier2 ) != NULL )  //read a line
         {
             ligne[strlen(ligne)-1]='\0';///on elève le \n
-            printf("mot lu dans le fichier : %s\n",ligne);
+            printf("\n\nmot lu dans le fichier : %s\n",ligne);
             ABR temp =rechercherMot(*dico,ligne);
             if (temp != NULL)
             {

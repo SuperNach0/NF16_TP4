@@ -36,5 +36,6 @@ void print (int k ,ABR dico, char * souschaine);
 void veridico (int k, ABR * dico, char * souschaine);
 void verimot (ABR * dico);
 
+ABR rechercheMotTaille (ABR racine ,char* mot);
 
 #endif // ABR_H_INCLUDED
