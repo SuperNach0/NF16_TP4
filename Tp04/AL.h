@@ -14,6 +14,11 @@ typedef struct T_mot{
     struct T_mot * suivant;
 }Mot;
 
+typedef struct T_filtre{
+    int (*fonction)(Mot,int);
+    int param;
+}Filtre;
+
 
 Dico initDico2(Dico *dico, Mot mot);
 Dico prefixeMot(Dico dico, Mot mot);
