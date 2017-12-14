@@ -5,6 +5,16 @@
 #include "AL.h"
 #include "ABR.h"
 
+
+void viderBuffer()
+{
+    int c = 0;
+    while (c != '\n' && c != EOF)
+    {
+        c = getchar();
+    }
+}
+
 Cellule * creerCellule(char c, Cellule * alt, Cellule * succ){
     // On alloue la mémoire puis on assigne les différentes valeurs, puis on renvoie un pointeur sur la cellule
     Cellule * newCell;
@@ -54,7 +64,9 @@ Dico initDico2(Dico *dico, Mot mot){
     
     return *dico;
 }
-
+// Renvoie un pointeur sur la cellule qui correspond à la lettre tq
+// La partie strictement après la lettre n'est pas dans le dico
+// La partie
 Dico prefixeMot(Dico dico, Mot mot){
     // VARIABLES
     int b = 1; // Notre boolean
@@ -84,6 +96,9 @@ Dico prefixeMot(Dico dico, Mot mot){
     return prefixe;
 }
 
+// Recherche le mot passé en paramètre dans le dictionnaire passé en paramètre et renvoie
+// 0 Si le mot n'est pas dans le dictionnaire
+// 1 Si le mot est dans le dictionnaire
 int rechercheMot2(Mot mot, Dico dico){
     // VARIABLES
     int b = 1; // Notre boolean
@@ -119,6 +134,7 @@ int rechercheMot2(Mot mot, Dico dico){
     return 0;
 }
 
+// Ajoute le mot passé en paramètre au dictionnaire pointé en paramètre
 Dico ajoutMot2(Mot mot, Dico *dico){
     if(rechercheMot2(mot,*dico)){
         printf("[ajoutMot2 : Information] : Ce mot est deja dans le dictionnaire, dictionnaire inchange renvoye\n");
@@ -268,8 +284,11 @@ Dico ajoutMot2(Mot mot, Dico *dico){
     }
     return *dico;
 }
+
+// Partie recursive de la fonction d'avant
 Dico recsupprimeMot2(Mot* mot, Dico dico){
     Dico it = dico;
+    Dico prec = NULL;
     if(it->c == '$'){
         if(it->alt != NULL){
             return it->alt;
@@ -278,22 +297,25 @@ Dico recsupprimeMot2(Mot* mot, Dico dico){
     }
     
     while (it->c != mot->c){
+        prec = it;
         it = it->alt;
     }
         
     Dico suiv = recsupprimeMot2(mot->suivant, it->succ);
     if(suiv == NULL){
         free(it->succ);
+        if(prec != NULL) prec->alt = it->alt;
         return it->alt;
     }
     it->succ = suiv;
     return it;
 }
 
+// Supprime le mot passé en paramètre du dictionnaire passé en paramètre
 Dico supprimeMot2(Mot mot, Dico dico){
     
     if(rechercheMot2(mot, dico)){
-        dico = recsupprimeMot2(&mot,dico);
+       dico = recsupprimeMot2(&mot,dico);
     }
     else{
         printf("[supprimeMot2 : Information] : Ce mot n'est pas dans le dictionnaire, dictionnaire renvoyé sans modifications\n");
@@ -317,9 +339,12 @@ void ajouterLettreMot(Mot *mot, char lettre){ // AJOUTER UNE LETTRE: TEST OK
     }
 }
 
+// Copie le 2nd mot dans le 1er (les deux pointeurs restent différents).
 void cpMots(Mot *mot1, Mot mot2){ // Copie le mot2 dans le mot 1: TEST OK
     Mot *iterator2 = &mot2;
     Mot *iterator1 = mot1;
+    (*iterator1).c = '$';
+    (*iterator1).suivant = NULL;
     while (iterator2 != NULL){
         iterator1->c = iterator2->c;
         if(iterator2->suivant != NULL){
@@ -330,26 +355,29 @@ void cpMots(Mot *mot1, Mot mot2){ // Copie le mot2 dans le mot 1: TEST OK
     }
     iterator1->suivant = NULL;
 }
+
+// printf le mot passé en paramètre
 void afficherMot(Mot mot){ // Affiche un mot: TEST OK
     Mot *iterator = &mot;
-    printf("\n");
     while (iterator != NULL){
         printf("%c",iterator->c);
         iterator=iterator->suivant;
     }
-    printf("\n");
 }
+
+
+// Partie recursive de la fonction suivante
 void printALrec(Dico dico, Mot mot){
     Dico iterator = dico;
     while (iterator != NULL){
         if(iterator->c == '$'){
+            printf("\n");
             afficherMot(mot);
         }
         else{
         Mot new;
 //        printf("Lettre: %c \n", iterator->c);
         cpMots(&new, mot);
-        printf("On visite la lettre: %c \n",iterator->c);
         ajouterLettreMot(&new, iterator->c);
         printALrec(iterator->succ, new);
         }
@@ -357,11 +385,13 @@ void printALrec(Dico dico, Mot mot){
     }
 }
 
+// Affiche tous les mots d'un AL
 void printAL(Dico dico){ // affiche tous les mots du dico: TEST OK
     Mot new = *creerMot('$', NULL);
     printALrec(dico, new);
 }
 
+// Retourne un mot à partir d'un String
 Mot creerMotString(char* string){ // Transforme un string en mot: TEST OK
     Mot new = *creerMot(string[0], NULL);
     int i = 1;
@@ -371,23 +401,245 @@ Mot creerMotString(char* string){ // Transforme un string en mot: TEST OK
     }
     return new;
 }
+
+
+// PRINT + FONCTIONS
+/// Constructeurs de tests
+
+/// Fonctions
+int commencePar(Mot a, int param){
+    if(a.c == param){
+        return 1;
+    }
+    return 0;
+}
+
+int nbLettre(Mot a, int param){
+    int i = 0;
+    Mot * b = &a;
+    while ((i<=param)&&(b != NULL)){
+        b = b->suivant;
+        i++;
+    }
+    if(i<=param)
+    {return 1;}
+    return 0;
+        
+}
+
+
+/// Fonction print
+void printALrecFILTRE(Dico dico, Mot mot, Filtre filtre){
+    Dico iterator = dico;
+    while (iterator != NULL){
+        if(iterator->c == '$'){
+            if((*filtre.fonction)(mot,filtre.param)){
+                afficherMot(mot);
+            }
+        }
+        else{
+            Mot new;
+            //        printf("Lettre: %c \n", iterator->c);
+            cpMots(&new, mot);
+            ajouterLettreMot(&new, iterator->c);
+            printALrecFILTRE(iterator->succ, new, filtre);
+        }
+        iterator=iterator->alt;
+    }
+}
+
+void printALFILTRE(Dico dico, Filtre filtre){ // affiche tous les mots du dico: TEST OK
+    Mot new = *creerMot('$', NULL);
+    printALrecFILTRE(dico, new, filtre);
+}
+
+// Fait une suggestion de k mots à partir du mot entré et
+int recsuggestionMot2(int k, Dico dico, Mot * souschaine, Mot mot, int n){
+    int i = 0;
+    Mot new;
+    Dico iterator = dico;
+    
+    if(souschaine != NULL){
+        while ((iterator != NULL)&&(iterator->c != souschaine->c)){
+            iterator=iterator->alt;
+        }
+        if(iterator != NULL){
+            cpMots(&new, mot);
+            ajouterLettreMot(&new, iterator->c);
+            i = i + recsuggestionMot2(k, iterator->succ, souschaine->suivant, new, i);
+        }
+    }
+    
+    iterator = dico;
+
+        while ((iterator != NULL)&&((i+n)<k)){
+                if(iterator->c == '$'){
+                    afficherMot(mot);
+                    printf("\n");
+                    i = i+1;
+                }
+                else if ((souschaine==NULL)||((souschaine != NULL)&&(iterator->c != souschaine->c))){
+                    cpMots(&new, mot);
+                    ajouterLettreMot(&new, iterator->c);
+                    i = i + recsuggestionMot2(k, iterator->succ, NULL, new, i+n);
+                }
+            
+        iterator=iterator->alt;
+    }
+    return i;
+    
+}
+
+// Affiche tous les mots d'un AL
+void suggestionMot2(int k, Dico dico, Mot souschaine){ // affiche tous les mots du dico: TEST OK
+    Mot new = *creerMot('$', NULL);
+    recsuggestionMot2(k,dico, &souschaine, new, 0);
+}
+// FIN PRINT + FONCTIONS
+
+void afficherMotveridico(Mot mot, Dico * dico){
+    printf("\n MOT : ");
+    Mot *iterator = &mot;
+    while (iterator != NULL){
+        printf("%c",iterator->c);
+        iterator=iterator->suivant;
+    }
+    printf("\nQue voulez vous faire ?\n");
+    printf("1-Correction\n2-Suppression\n3-Ignorer\n");
+    
+    int rep;
+    int boole;
+    char nouveau[30];
+    printf("\nChoix :");scanf("%d",&rep);
+    printf("\n");
+    do{
+        boole = 0;
+    switch (rep) {
+        case 1:
+            printf("Rentrez le mot corrigé (max. 30 lettres) : ");
+            viderBuffer();
+            scanf("%s", nouveau);
+            (*dico) = supprimeMot2(mot,*dico);
+            (*dico) = ajoutMot2(creerMotString(nouveau), dico);
+            printf("\nMOT CORRIGE !");
+            break;
+        case 2:
+            supprimeMot2(mot,*dico);
+            printf("\nMOT SUPPRIME !");
+            break;
+        case 3:
+            break;
+        default:
+            boole = 1;
+            break;
+    }
+    }while(boole);
+}
+
+void printALrecFILTREveridico(Dico dico, Mot mot, Filtre filtre, Dico dico2){
+    Dico iterator = dico;
+    while (iterator != NULL){
+        if(iterator->c == '$'){
+            iterator=iterator->alt;
+            if((*filtre.fonction)(mot,filtre.param)){
+                afficherMotveridico(mot, &dico2);
+            }
+        }
+        else{
+            Mot new;
+            //        printf("Lettre: %c \n", iterator->c);
+            cpMots(&new, mot);
+            ajouterLettreMot(&new, iterator->c);
+            printALrecFILTREveridico(iterator->succ, new, filtre, dico2);
+            iterator=iterator->alt;
+        }
+        
+    }
+}
+
+void printALFILTREveridico(Dico * dico, Filtre filtre){ // affiche tous les mots du dico: TEST OK
+    Mot new = *creerMot('$', NULL);
+    printALrecFILTREveridico(*dico, new, filtre, *dico);
+}
+void veridico2(Dico dico){
+    Filtre filtre;
+    Mot new = *creerMot('$', NULL);
+    
+    printf("\n############################");
+    printf("\n####### - VERIDICO - #######");
+    printf("\n############################");
+    printf("\n\n");
+    printf(" -- MENU --\n");
+    printf(" QUEL FILTRE APPLIQUER AU DICTIONNAIRE ?\n");
+    printf("1- Mots qui commencent par la lettre .. \n");
+    printf("2- Mots qui comportent moins de N lettres \n");
+    printf("3- Quitter VERIDICO \n");
+    printf("\n");
+    printf("Choix : ");
+    
+    int rep, nb;
+    int boole;
+    char lettre;
+    scanf("%d",&rep);
+    
+    do{
+        boole = 0;
+        switch (rep) {
+            case 1:
+                printf("Lettre par laquelle les mots doivent commencer : ");
+                viderBuffer();
+                scanf("%c", &lettre);
+                filtre.fonction = commencePar;
+                filtre.param = lettre;
+                printf("\n");
+                printALrecFILTREveridico(dico, new, filtre, dico);
+                break;
+            case 2:
+                printf("Nombre de lettre que doivent avoir les mots au maximum : ");
+                viderBuffer();
+                scanf("%d", &nb);
+                filtre.fonction = nbLettre;
+                filtre.param = nb;
+                printf("\n");
+                printALrecFILTREveridico(dico, new, filtre, dico);
+                break;
+            case 3:
+                break;
+            default:
+                boole = 1;
+                break;
+        }
+    }while(boole);
+    
+    
+}
+
+
 void fctionTest(){
     
-    Dico leDico = NULL;
-    Mot monmot = creerMotString("SALUT");
-    
-    leDico= initDico2(&leDico, monmot);
-    
-    printAL(leDico);
-    
-    printf("###########\n");
-    leDico = supprimeMot2(monmot, leDico);
-    printf("###########\n");
-    printf("\n%d",rechercheMot2(monmot, leDico));
     
     
     
     
+    
+    Dico leDico;
+    leDico = initDico2(&leDico, creerMotString("Bonjour"));
+    leDico = ajoutMot2(creerMotString("Bonjor"), &leDico);
+    leDico = ajoutMot2(creerMotString("Bonjar"), &leDico);
+    leDico = ajoutMot2(creerMotString("Bonjir"), &leDico);
+    leDico = ajoutMot2(creerMotString("Bonjior"), &leDico);
+    leDico = ajoutMot2(creerMotString("Bonjazzzr"), &leDico);
+    leDico = ajoutMot2(creerMotString("Boncar"), &leDico);
+    leDico = ajoutMot2(creerMotString("Bonzar"), &leDico);
+    leDico = ajoutMot2(creerMotString("Es"), &leDico);
+    leDico = ajoutMot2(creerMotString("EE"), &leDico);
+    veridico2(leDico);
+//    printf("suppression\n");
+//    leDico = supprimeMot2(creerMotString("EE"), leDico);
+//    printf("FIN\n");
+//    leDico = ajoutMot2(creerMotString("YOUU"), &leDico);
+  printAL(leDico);
+////
 //
 //
 //
@@ -447,10 +699,7 @@ void fctionTest(){
 //        ledico = ajoutMot2(tableauMots[i], &ledico);
 //    }
 //    int g = 1;
-//    for(i=0;i<nbmots;i++){
-//        ledico = supprimeMot2(tableauMots[i], ledico);
-//    }
-//    printAL(ledico);
+//    printALFILTRE(ledico, nbMots);
 //
 //    if(g==0){printf("Fail\n");}
 //    else{printf("OUII\n");}
