@@ -8,7 +8,7 @@
 int main()
 {
 
-    feuille* racine = NULL;
+    ABR     racine = NULL;
     FILE* fichier = NULL;
     FILE* fichier2 = NULL;
     int i;
@@ -26,11 +26,11 @@ int main()
         perror ( fichier ); /* why didn't the file open? */
     }
 
-;
+    suggestionMots(5,racine,"da");
     while (j!= 5)
     {
         printf("#######################################\n");
-        printf("########## MENU DES ABR ###############\n");
+        printf("########## MENU DES  ###############\n");
         printf("#######################################\n\n");
         printf("que voulez vous faire ? \n");
         printf("1-> print\n2-> verimot\n3 ->veridico\n5 -> quitter\n");

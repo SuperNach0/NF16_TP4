@@ -4,37 +4,37 @@
 
 typedef struct T_feuille{
     char mot[20];
-    struct T_feuille* pere;
-    struct T_feuille* left;
-    struct T_feuille* right;
+    struct T_feuille * pere;
+    struct T_feuille * left;
+    struct T_feuille * right;
 }feuille;
 
-typedef feuille * ABR;
+typedef feuille *  ABR;
 
-feuille *creerfeuille (char *texte);
-void ajoutMot (feuille **racine, char* mot);
-feuille* rechercherMot (feuille *racine, char* mot);
-feuille* rechercherMin (feuille *racine);
-feuille* rechercherMax (feuille *racine);
+ABR creerfeuille (char *texte);
+void ajoutMot (ABR *racine, char* mot);
+ABR rechercherMot (ABR racine, char* mot);
+ABR rechercherMin (ABR racine);
+ABR rechercherMax (ABR racine);
 
-feuille* rechercherMot2 (feuille **racine, char* mot);
+ABR rechercherMot2 (ABR *racine, char* mot);
 
-void supprimerMot (feuille **racine, char* mot);
+void supprimerMot (ABR *racine, char* mot);
 
-feuille* successeur (feuille *racine);
-feuille* predecesseur (feuille *racine);
+ABR successeur (ABR racine);
+ABR predecesseur (ABR racine);
 
-void afficherArbre (feuille *racine);
+void afficherArbre (ABR racine);
 
 
-void ouvrir (feuille ** racine, FILE * fichier);
-void quitter (feuille * racine, FILE * fichier );
+void ouvrir (ABR * racine, FILE * fichier);
+void quitter (ABR  racine, FILE * fichier );
 
-void suggestionMots (int k, feuille *dico,char *souschaine);
+void suggestionMots (int k, ABR dico,char *souschaine);
 
-void print (int k ,feuille *dico, char * souschaine);
-void veridico (int k, feuille ** dico, char * souschaine);
-void verimot (feuille ** dico);
+void print (int k ,ABR dico, char * souschaine);
+void veridico (int k, ABR * dico, char * souschaine);
+void verimot (ABR * dico);
 
 
 #endif // ABR_H_INCLUDED

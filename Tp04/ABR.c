@@ -8,9 +8,9 @@
 
 
 
-feuille *creerfeuille (char *texte)
+ABR creerfeuille (char *texte)
 {
-    feuille *nouv  = malloc(sizeof *nouv);
+    ABR nouv  = malloc(sizeof *nouv);
     if(nouv != NULL)
     {
 
@@ -83,7 +83,7 @@ void ajoutMot (feuille** racine, char* mot)
     }
 }
 
-feuille* rechercherMot (feuille *racine, char* mot)
+feuille* rechercherMot (ABR racine, char* mot)
 {
     if (racine == NULL)
     {
@@ -109,7 +109,7 @@ feuille* rechercherMot (feuille *racine, char* mot)
 
 
 
-feuille* rechercherMin (feuille *racine)
+feuille* rechercherMin (ABR racine)
 {
     if (racine == NULL)
     {
@@ -126,7 +126,7 @@ feuille* rechercherMin (feuille *racine)
 }
 
 
-feuille* rechercherMax (feuille *racine)
+feuille* rechercherMax (ABR racine)
 {
     if (racine == NULL)
     {
@@ -143,7 +143,7 @@ feuille* rechercherMax (feuille *racine)
 }
 
 
-feuille* rechercherMot2 (feuille **racine, char* mot)
+feuille* rechercherMot2 (ABR *racine, char* mot)
 {
 
     if (*racine == NULL)
@@ -154,7 +154,7 @@ feuille* rechercherMot2 (feuille **racine, char* mot)
 
     else
     {
-        feuille *it = *racine;
+        ABR it = *racine;
         while (it != NULL)
         {
             if (strcmp(it->mot,mot)==0)
@@ -171,7 +171,7 @@ feuille* rechercherMot2 (feuille **racine, char* mot)
     }
 }
 
-void supprimerMot (feuille **racine, char* mot)
+void supprimerMot (ABR *racine, char* mot)
 {
     feuille* todelete =rechercherMot(*racine,mot);
     printf("%s\n", todelete->mot);
@@ -206,7 +206,7 @@ void supprimerMot (feuille **racine, char* mot)
         }
         else
         {
-            feuille * temp = todelete;
+            ABR  temp = todelete;
             if (todelete->right==NULL)
             {
                 if (todelete->left==NULL) ///il n'a pas de fils
@@ -278,7 +278,7 @@ void supprimerMot (feuille **racine, char* mot)
     }
 }
 
-void afficherArbre (feuille *racine)
+void afficherArbre (ABR racine)
 {
     if (!racine) return ;
     if (racine->left) afficherArbre(racine->left);
@@ -288,7 +288,7 @@ void afficherArbre (feuille *racine)
 }
 
 
-void ouvrir (feuille ** racine, FILE * fichier)
+void ouvrir (ABR * racine, FILE * fichier)
 {
     char line [ 128 ];
     while ( fgets ( line, sizeof line, fichier ) != NULL )  //read a line
@@ -299,7 +299,7 @@ void ouvrir (feuille ** racine, FILE * fichier)
     return;
 }
 
-void quitter (feuille * racine, FILE * fichier )
+void quitter (ABR  racine, FILE * fichier )
 {
     while (racine!=NULL)
     {
@@ -314,13 +314,13 @@ void quitter (feuille * racine, FILE * fichier )
 }
 
 
-feuille* successeur (feuille *racine)
+feuille* successeur (ABR racine)
 {
     if (racine->right)
     {
         return rechercherMin(racine->right);
     }
-    feuille *pere = racine->pere;
+    ABR pere = racine->pere;
     while ((racine!=NULL)&& racine==pere->right)
     {
         racine = pere;
@@ -329,13 +329,13 @@ feuille* successeur (feuille *racine)
     return pere;
 }
 
-feuille* predecesseur (feuille *racine)
+feuille* predecesseur (ABR racine)
 {
     if (racine->left)
     {
         return rechercherMax(racine->left);
     }
-    feuille *pere = racine->pere;
+    ABR pere = racine->pere;
     while ((racine!=NULL)&& racine==pere->left)
     {
         racine = pere;
@@ -347,9 +347,9 @@ feuille* predecesseur (feuille *racine)
 
 
 
-void suggestionMots (int k, feuille *dico,char *souschaine)
+void suggestionMots (int k, ABR dico,char *souschaine)
 {
-    feuille * sauvegarde [20];
+    ABR  sauvegarde [20];
     int Lmax [20];
     int j=0;
     if (k<0)
@@ -370,8 +370,8 @@ void suggestionMots (int k, feuille *dico,char *souschaine)
         printf("dico vide \n");
         return;
     }
-    feuille *temp = dico;
-    feuille *leplusproche =dico;
+    ABR temp = dico;
+    ABR leplusproche =dico;
     for (i=1; i<=strlen(souschaine); i++)
     {
         while (temp!=NULL)
@@ -406,14 +406,11 @@ void suggestionMots (int k, feuille *dico,char *souschaine)
     {
         temp=sauvegarde[i];
         lengthmax=Lmax[i];
-        while(temp!=NULL)
+        while(strncmp(predecesseur(temp),temp,lengthmax)==0)
         {
-            if (strncmp(temp->mot,souschaine,lengthmax)==0) ///c'est plus petit et a aussi la sous chaine
-            {
-                leplusproche=temp;
-            }
-            temp=temp->left;
+            temp=predecesseur(temp);
         }
+        leplusproche=temp;
 
         if (k<=1)
         {
@@ -424,7 +421,7 @@ void suggestionMots (int k, feuille *dico,char *souschaine)
         printf(" \n %s\n",leplusproche->mot);///c'est lui le plus proche !
         k--;
 
-        feuille * suc = successeur(leplusproche);
+        ABR  suc = successeur(leplusproche);
         while ((k!=0)&&(strncmp(suc->mot,souschaine,lengthmax)==0))
         {
             //if (strncmp(suc->mot,souschaine,lengthmax+1)!=0)
@@ -443,11 +440,11 @@ void suggestionMots (int k, feuille *dico,char *souschaine)
 }
 
 
-void print (int k,feuille *dico, char * souschaine)
+void print (int k,ABR dico, char * souschaine)
 {
     int lengthmax;
-    feuille *temp = dico;
-    feuille *leplusproche =dico;
+    ABR temp = dico;
+    ABR leplusproche =dico;
     while ((leplusproche!=NULL)&& (strncmp(leplusproche->mot,souschaine,strlen(souschaine))!=0) )
     {
 
@@ -464,6 +461,19 @@ void print (int k,feuille *dico, char * souschaine)
 
         }
     }
+    if (leplusproche!=NULL){
+    printf("TEST : %s\n",leplusproche->mot);
+    //afficherArbre(leplusproche->left);
+    temp=leplusproche;
+    while(temp!=NULL)
+        {
+            if (strncmp(temp->mot,souschaine,strlen(souschaine))==0) ///c'est plus petit et a aussi la sous chaine
+            {
+                leplusproche=temp;
+            }
+            temp=temp->left;
+        }
+    }
     //printf("\nhihi\n");
 
     if (leplusproche==NULL)
@@ -473,7 +483,8 @@ void print (int k,feuille *dico, char * souschaine)
         else
             leplusproche=successeur(temp);
     }
-    feuille *max =rechercherMax(dico);
+
+    ABR max =rechercherMax(dico);
     printf("voici les mots les plus proches :\n");
     while ((leplusproche!=NULL)&&(k!=0))
     {
@@ -486,12 +497,12 @@ void print (int k,feuille *dico, char * souschaine)
 
 }
 
-void veridico (int k, feuille ** dico, char * souschaine)
+void veridico (int k, ABR * dico, char * souschaine)
 {
     int lengthmax;
     feuille* temp = *dico;
     feuille* leplusproche = *dico;
-    feuille *max =rechercherMax(*dico);
+    ABR max =rechercherMax(*dico);
     while ((leplusproche!=NULL)&& (strncmp(leplusproche->mot,souschaine,strlen(souschaine))!=0) )
     {
 
@@ -562,7 +573,7 @@ void veridico (int k, feuille ** dico, char * souschaine)
     return;
 }
 
-void verimot (feuille ** dico)
+void verimot (ABR * dico)
 {
     FILE *fichier2 =NULL;
 
@@ -577,7 +588,7 @@ void verimot (feuille ** dico)
         {
             ligne[strlen(ligne)-1]='\0';///on elève le \n
             printf("mot lu dans le fichier : %s\n",ligne);
-            feuille *temp =rechercherMot(*dico,ligne);
+            ABR temp =rechercherMot(*dico,ligne);
             if (temp != NULL)
             {
                 printf("ce mot est deja present dans le dictionnaire, on passe au suivant. \n");
