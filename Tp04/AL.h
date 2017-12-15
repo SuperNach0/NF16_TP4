@@ -25,13 +25,10 @@ Dico ajoutMot2(Mot mot, Dico *dico);
 Dico supprimeMot2(Mot mot, Dico dico);
 
 void verimot2(Dico dico);
-void veridico2(Dico dico);
+void veridico2(Dico * dico);
 void suggestionMot2(int k, Dico dico, Mot souschaine);
 void printALFILTRE(Dico dico, Filtre filtre);
 void printAL(Dico dico);
-
-
-// Autres
 
 
 typedef struct T_liste{
@@ -46,7 +43,7 @@ void writeMot(Mot mot, FILE * fichier);
 ListeMot * loadFileListe(char * nomFichier);
 Dico loadFileAL(char * nomFichier);
 void printALFILTREveridico(Dico * dico, Filtre filtre);
-void printALrecFILTREveridico(Dico dico, Mot mot, Filtre filtre, Dico dico2);
+void printALrecFILTREveridico(Dico *dico, Mot mot, Filtre filtre, Dico * dico2);
 void afficherMotveridico(Mot mot, Dico * dico);
 int recsuggestionMot2(int k, Dico dico, Mot * souschaine, Mot mot, int n);
 void printALrecFILTRE(Dico dico, Mot mot, Filtre filtre);

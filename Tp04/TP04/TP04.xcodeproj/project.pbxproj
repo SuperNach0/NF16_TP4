@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A00D3101FE3366400D095AB /* tp4.h in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375C71FD162A800563CCF /* tp4.h */; };
+		5A00D3111FE3366400D095AB /* ABR.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375CE1FD1647B00563CCF /* ABR.c */; };
+		5A00D3121FE3366400D095AB /* ABR.h in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375CD1FD1647A00563CCF /* ABR.h */; };
+		5A00D3131FE3366400D095AB /* AL.h in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375CC1FD1647A00563CCF /* AL.h */; };
 		5A3375CA1FD162A800563CCF /* tp4.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375C81FD162A800563CCF /* tp4.c */; };
 		5A3375CB1FD162A800563CCF /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375C91FD162A800563CCF /* main.c */; };
 		5A3375D11FD1647B00563CCF /* AL.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A3375CF1FD1647B00563CCF /* AL.c */; };
@@ -135,6 +139,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A00D3101FE3366400D095AB /* tp4.h in Sources */,
+				5A00D3111FE3366400D095AB /* ABR.c in Sources */,
+				5A00D3121FE3366400D095AB /* ABR.h in Sources */,
+				5A00D3131FE3366400D095AB /* AL.h in Sources */,
 				5A3375CB1FD162A800563CCF /* main.c in Sources */,
 				5A3375D11FD1647B00563CCF /* AL.c in Sources */,
 				5A3375CA1FD162A800563CCF /* tp4.c in Sources */,
