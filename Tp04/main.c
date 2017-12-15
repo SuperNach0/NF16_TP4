@@ -30,6 +30,7 @@ int main() {
             perror ( fichier ); /* why didn't the file open? */
         }
 
+        suggestionMots(20,racine,"poulpe");
         while (j!= 5) {
             printf("#######################################\n");
             printf("########## MENU DES ABR  ###############\n");
