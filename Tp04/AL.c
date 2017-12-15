@@ -5,6 +5,7 @@
 #include "AL.h"
 #include "ABR.h"
 
+int GLOB_aborterVeridico;
 
 void viderBuffer()
 {
@@ -507,7 +508,7 @@ void afficherMotveridico(Mot mot, Dico * dico){
         iterator=iterator->suivant;
     }
     printf("\nQue voulez vous faire ?\n");
-    printf("1-Correction\n2-Suppression\n3-Ignorer\n");
+    printf("1-Correction\n2-Suppression\n3-Ignorer\n4-Quitter\n");
 
     int rep;
     int boole;
@@ -531,6 +532,10 @@ void afficherMotveridico(Mot mot, Dico * dico){
             break;
         case 3:
             break;
+        case 4:
+            GLOB_aborterVeridico = 1;
+            boole = 0;
+            break;
         default:
             boole = 1;
             break;
@@ -538,7 +543,11 @@ void afficherMotveridico(Mot mot, Dico * dico){
     }while(boole);
 }
 
+
+
 void printALrecFILTREveridico(Dico *dico, Mot mot, Filtre filtre, Dico *dico2){
+    if(GLOB_aborterVeridico == 1){return;}
+    
     Dico iterator = *dico;
     while (iterator != NULL){
         if(iterator->c == '$'){
@@ -555,16 +564,12 @@ void printALrecFILTREveridico(Dico *dico, Mot mot, Filtre filtre, Dico *dico2){
             printALrecFILTREveridico(&iterator->succ, new, filtre, dico2);
             iterator=iterator->alt;
         }
-
+        if(GLOB_aborterVeridico == 1){return;}
     }
 }
 
-void printALFILTREveridico(Dico * dico, Filtre filtre){ // affiche tous les mots du dico: TEST OK
-    Mot new = *creerMot('$', NULL);
-    printALrecFILTREveridico(dico, new, filtre, dico);
-}
-
 void veridico2(Dico * dico){
+    GLOB_aborterVeridico = 0;
     Filtre filtre;
     Mot new = *creerMot('$', NULL);
 
