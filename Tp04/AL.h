@@ -42,7 +42,6 @@ void writeFileALrec(FILE * fichier, Dico dico, Mot mot);
 void writeMot(Mot mot, FILE * fichier);
 ListeMot * loadFileListe(char * nomFichier);
 Dico loadFileAL(char * nomFichier);
-void printALFILTREveridico(Dico * dico, Filtre filtre);
 void printALrecFILTREveridico(Dico *dico, Mot mot, Filtre filtre, Dico * dico2);
 void afficherMotveridico(Mot mot, Dico * dico);
 int recsuggestionMot2(int k, Dico dico, Mot * souschaine, Mot mot, int n);

@@ -89,14 +89,14 @@ int main() {
         Filtre notreFiltre;
 
         // Code
-        printf("############################\n");
-        printf("###########- AL -###########\n");
-        printf("############################\n");
 
         notreDico = loadFileAL("dicoErwan.txt");
+        printf("\n\n\n############################\n");
+        printf("###########- AL -###########\n");
+        printf("############################\n");
         bool = 1;
         do{
-            printf("\n\n\n\n");
+            printf("\n\n\n");
             printf("Que voulez vous faire ?\n");
             printf("1 - Print\n");
             printf("2 - Verimot\n");
