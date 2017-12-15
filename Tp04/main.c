@@ -31,7 +31,7 @@ int main() {
             perror ( fichier ); /* why didn't the file open? */
         }
 
-        suggestionMots(20,racine,"poulpe");
+       /// suggestionMots(20,racine,"poulpe");
         while (j!= 5) {
             printf("#######################################\n");
             printf("########## MENU DES ABR  ###############\n");
@@ -80,19 +80,19 @@ int main() {
     else if (choixStruct==2){
         ///%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%שששש
         ///PARTIE BASTIEN !!!!!!
-        
+
         // Variables
         Dico notreDico;
         int bool;
         int rep;
         char rep2;
         Filtre notreFiltre;
-        
+
         // Code
         printf("############################\n");
         printf("###########- AL -###########\n");
         printf("############################\n");
-        
+
         notreDico = loadFileAL("dicoErwan.txt");
         bool = 1;
         do{
@@ -106,7 +106,7 @@ int main() {
             printf("Choix : \n");
             viderBuffer();
             scanf("%d",&rep);
-            
+
             switch (rep) {
                 case 1:
                     printf("##### CHOIX: PRINT\n");
@@ -145,7 +145,7 @@ int main() {
                             printf("Je n'ai pas compris votre choix..\n");
                             break;
                     }
-                    
+
                     break;
                 case 2:
                     verimot2(notreDico);
@@ -159,9 +159,9 @@ int main() {
                 default:
                     break;
             }
-            
+
         }while(bool);
-        
+
     }
 
 

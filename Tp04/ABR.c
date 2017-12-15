@@ -454,8 +454,9 @@ void suggestionMots (int k, ABR dico,char *souschaine)
 void print (int k,ABR dico, char * souschaine)
 {
     int mode;
-    printf("quel mode de recherche ? \n1-<n> mots a partir de <souschaine>\n2-<n> mots commencant par <souschaine>\n");
+    printf("quel mode de recherche ? \n1-<n> mots a partir de <souschaine>\n2-TOUS les mots commencant par <souschaine>\n");
     scanf("%d",&mode);
+    if (mode ==1){
     int lengthmax;
     ABR temp = dico;
     ABR leplusproche =dico;
@@ -487,7 +488,6 @@ void print (int k,ABR dico, char * souschaine)
 
     if (leplusproche==NULL)
     {
-        if (mode==2){printf("souschaine introuvable\n"); return;}
         if (strcmp(souschaine,temp->mot)<0)
             leplusproche=temp;
         else
@@ -504,6 +504,41 @@ void print (int k,ABR dico, char * souschaine)
         leplusproche=successeur(leplusproche);
     }
     return;
+    }
+    else if (mode ==2){
+        int lengthmax;
+    ABR temp = dico;
+    ABR leplusproche =dico;
+    while ((leplusproche!=NULL)&& (strncmp(leplusproche->mot,souschaine,strlen(souschaine))!=0) )
+    {
+
+        if (strcmp(leplusproche->mot,souschaine)<0)
+        {
+            temp=leplusproche;
+            leplusproche=leplusproche->right;
+        }
+        else if (strcmp(leplusproche->mot,souschaine)>0)
+        {
+            temp=leplusproche;
+            leplusproche=leplusproche->left;
+        }
+    }
+    if (leplusproche==NULL){
+        printf("pas de sous chaine trouvee\n");
+    }
+    else{
+        while (strncmp(predecesseur(leplusproche)->mot,souschaine,strlen(souschaine))==0){
+            leplusproche=predecesseur(leplusproche);
+        }
+        printf("%s\n",leplusproche->mot);
+         while (strncmp(successeur(leplusproche)->mot,souschaine,strlen(souschaine))==0){
+            leplusproche=successeur(leplusproche);
+            printf("%s\n",leplusproche->mot);
+        }
+
+    }
+
+    }
 
 }
 

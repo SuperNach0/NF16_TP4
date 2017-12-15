@@ -2623,8 +2623,8 @@ anticonformiste
 anticonformisme
 antidiagonale
 anticryptogamique
-anticonstitutionnellø`Íx^ÍÈ^Íh1Ã^
-anticonstitutionnell_Í
+anticonstitutionnellğE¼€G¼xE¼œ•;@
+anticonstitutionnellF¼
 anticorpuscule
 anticorps
 antidate
@@ -2647,7 +2647,7 @@ antiglisse
 antigel
 antigouvernementale
 antimonarchique
-antigravitationnelle_Í
+antigravitationnelle˜H¼
 antimilitariste
 antilogarithme
 antihistaminique
@@ -4281,9 +4281,9 @@ autorail
 autorisais
 autorisai
 avertie
-autosuggestionneronspzÎP|Î0Ï~@2~ï¿½Hï¿½ï¿½
+autosuggestionneronsØ…½@‡½øÀ½~@2~ï¿½Hï¿½ï¿½
 autorise
-autosuggestionnassieP|Î0~Î
+autosuggestionnassie@‡½‡½€À½ô¿s
 autosuffisance
 autoriserai
 autoriser
@@ -4294,11 +4294,11 @@ autosatisfaction
 autoroute
 autoscopie
 autosuggestion
-autosuggestionnerionˆ€ÎÏ
-autosuggestionneriez
+autosuggestionnerionp‰½HÁ½
+autosuggestionneriez€À½`Â½
 autosuggestionnerez
 autosuggestionner
-autosuggestionnassioÏ
+autosuggestionnassio@Ä½
 avaloir
 autrui
 autrichienne
@@ -11478,12 +11478,12 @@ consternerai
 constiper
 constitue
 constituer
-constitutionnalisaisØÈÒ ÌÒ
+constitutionnalisais¸ğÀèòÀ
 constitutionnalisai
 constitutive
-constitutionnaliserapÌÒ€ËÒàÏÒñÃHD
+constitutionnalisera8óÀhõÀĞöÀñÃHD
 constitutionnaliser
-constitutionnellemenXËÒøËÒ
+constitutionnellemenõÀPôÀ
 constitutionnelle
 construction
 constructible
@@ -17096,7 +17096,7 @@ escrimez
 esbaudissons
 erratique
 ergotisme
-ergographe
+ergonome
 erbine
 envoilerez
 envoiler
@@ -17151,7 +17151,6 @@ ergodique
 ergoter
 ergotai
 ergonomique
-ergonome
 ergonomie
 ergotage
 ergot
@@ -23850,7 +23849,7 @@ inconfortablement
 incompressible
 inconcevable
 incomprise
-inconditionnellement°?ÚÀ>Ú˜>Úï¿½ï¿½pï¿½Gï¿½ï¿½
+inconditionnellementØLÉ MÉìÛï¿½ï¿½pï¿½Gï¿½ï¿½
 inconditionnelle
 inconcevablement
 inconciliable
@@ -23881,7 +23880,7 @@ indemnitaire
 incontinente
 incontinence
 inconstructible
-inconstitutionnellem8ÙÜ
+inconstitutionnellem˜îÛ
 incontestablement
 incontestable
 inconvenance
@@ -24583,13 +24582,13 @@ instituais
 instituai
 institutes
 institutionnaliser
-institutionnalisatioÀ8Üè8Üğ:Ü[ry+
+institutionnalisatio8^Ûˆ^Û°^Û[ry+
 institutionnalisais
 institutionnalise
 instruire
 instruction
 institutionnelle
-institutionnaliserai89Ü
+institutionnaliserai(_Û
 institutionnalisme
 institutrice
 instructive
@@ -24769,7 +24768,7 @@ interfolie
 interfoliais
 interjetterai
 interjette
-intergouvernementaleZÜĞZÜøZÜ½ï¿½
+intergouvernementale
 interglaciaire
 interfolierai
 interjetai
@@ -24806,7 +24805,7 @@ internais
 internat
 internationalisai
 internationalisais
-internationalisation8\Ü
+internationalisation €Û
 internement
 internationaliserai
 internationaliser
@@ -24840,7 +24839,7 @@ interpoler
 interposais
 interrelation
 interpose
-interprofessionnelleH`Üè`Ü
+interprofessionnelle …ÛƒÛ
 interposer
 interposition
 interposerai
@@ -36683,7 +36682,7 @@ radiocompas
 radiocommunication
 radiocobalt
 radioconducteur
-radiocristallographiHÄã
+radiocristallographi€6ã
 radoucis
 radioscopie
 radioprotection
@@ -42018,7 +42017,7 @@ socialiserai
 socialiser
 socialiste
 sociatrie
-socioprofessionnelleĞ
+socioprofessionnelleè­å(ªå
 sociogramme
 socioculturelle
 sociodrame
@@ -44753,7 +44752,7 @@ techniserai
 techniser
 technocratie
 technocrate
-technobureaucratique
+technobureaucratique¸¶æ
 technocratise
 technocratisation
 technocratisais
@@ -48839,6 +48838,6 @@ zymase
 zygote
 zymotechnie
 zythum
-ÒÀÒÈÒ½ ï¿½ï¿½é
+ÒÀÒÈÒ½ ï¿½ï¿½˜è
 ï¿½f9'k
 ï¿½ï¿½ï¿½
