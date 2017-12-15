@@ -187,9 +187,11 @@ void supprimerMot (ABR *racine, char* mot)
             feuille* temp = rechercherMin(todelete->right);
             if (temp==todelete->right)
             {
-                todelete->right=temp->right;
-                temp->right->pere=todelete;
                 strcpy(todelete->mot,temp->mot);
+                todelete->right=temp->right;
+                if (temp->right)
+                temp->right->pere=todelete;
+
                 free(temp);
                 /// printf("supression : il avait 2 fils\n");
                 return (void)0;
@@ -198,6 +200,7 @@ void supprimerMot (ABR *racine, char* mot)
             {
                 strcpy(todelete->mot,temp->mot);
                 temp->pere->left=temp->right;
+                if (temp->right)
                 temp->right->pere=temp->pere;
                 free(temp);
                 ///     printf("supression : il avait 2 fils\n");
@@ -422,10 +425,6 @@ void suggestionMots (int k, ABR dico,char *souschaine)
             return;
         }
 
-
-
-
-
         ABR  suc = leplusproche;
         while ((k!=0)&&(strncmp(suc->mot,souschaine,lengthmax)==0))
         {
@@ -454,6 +453,9 @@ void suggestionMots (int k, ABR dico,char *souschaine)
 
 void print (int k,ABR dico, char * souschaine)
 {
+    int mode;
+    printf("quel mode de recherche ? \n1-<n> mots a partir de <souschaine>\n2-<n> mots commencant par <souschaine>\n");
+    scanf("%d",&mode);
     int lengthmax;
     ABR temp = dico;
     ABR leplusproche =dico;
@@ -485,6 +487,7 @@ void print (int k,ABR dico, char * souschaine)
 
     if (leplusproche==NULL)
     {
+        if (mode==2){printf("souschaine introuvable\n"); return;}
         if (strcmp(souschaine,temp->mot)<0)
             leplusproche=temp;
         else

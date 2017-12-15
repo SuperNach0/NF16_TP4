@@ -35,3 +35,32 @@
 	"tp4.h"
 	"ABR.h"
 
+1513320462 source:c:\users\tertrais.e\documents\utc\nf16\bon\tp04\al.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"tp4.h"
+	"AL.h"
+	"ABR.h"
+
+1513320462 c:\users\tertrais.e\documents\utc\nf16\bon\tp04\tp4.h
+
+1513320462 c:\users\tertrais.e\documents\utc\nf16\bon\tp04\al.h
+
+1513320462 c:\users\tertrais.e\documents\utc\nf16\bon\tp04\abr.h
+
+1513320462 source:c:\users\tertrais.e\documents\utc\nf16\bon\tp04\main.c
+	<stdio.h>
+	<stdlib.h>
+	"tp4.h"
+	"AL.h"
+	"ABR.h"
+
+1513320618 source:c:\users\tertrais.e\documents\utc\nf16\bon\tp04\abr.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	"tp4.h"
+	"ABR.h"
+
