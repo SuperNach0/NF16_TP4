@@ -285,39 +285,45 @@ Dico ajoutMot2(Mot mot, Dico *dico){
     return *dico;
 }
 
-// Partie recursive de la fonction d'avant
+// Partie recursive de la fonction suivant (supprimeMot2)
 Dico recsupprimeMot2(Mot* mot, Dico dico){
     Dico it = dico;
     Dico prec = NULL;
-    if(it->c == '$'){
-        if(it->alt != NULL){
+    // Si on trouve le mot (on trouve un $ est on est à la fin du mot)
+    // On envoie l'alternative de $ (une case ou NULL)
+    if((it->c == '$')&&(mot == NULL)){
             return it->alt;
-        }
-        return NULL;
     }
 
+    // Sinon on trouve la bonne alternative, celle qui correspond à la lettre
     while (it->c != mot->c){
         prec = it;
         it = it->alt;
     }
 
+    // Et on va chercher la lettre suivante
     Dico suiv = recsupprimeMot2(mot->suivant, it->succ);
 
+    // Si la lettre suivante est NULL (et donc qu'on a supprimé tout ce qu'il y a après).
     if(suiv == NULL){
-        free(it->succ);
-        if(prec != NULL){
-            prec->alt = it->alt;
-            return dico;
+        free(it->succ);// on libère l'espace mémoire
+        if(prec != NULL){ // Si notre lettre n'est pas la "racine" des alternatives,
+            prec->alt = it->alt; // On raccroche le précédent au suivant, pour assurer la continuité
         }
-        return it->alt;
+        else{
+            return it->alt; // Sinon on renvoie l'alt (on est en haut des alternatives)
+        }
+    }else{
+        // La lettre suivant n'est pas nulle, donc on raccroche la lettre renvoyée
+        it->succ = suiv;
     }
-    return dico;
+    return dico;// Et on retourne le dico (toutes les alternatives depuis le début).
 }
 
 // Supprime le mot passé en paramètre du dictionnaire passé en paramètre
 Dico supprimeMot2(Mot mot, Dico dico){
 
-    if(rechercheMot2(mot, dico)){
+    if(rechercheMot2(mot, dico)){ // On ne supprime que les mots qui sont présents dans le dico
        dico = recsupprimeMot2(&mot,dico);
     }
     else{
@@ -463,25 +469,29 @@ int recsuggestionMot2(int k, Dico dico, Mot * souschaine, Mot mot, int n){
     Dico iterator = dico;
 
     if(souschaine != NULL){
+        // La souschaine n'est pas nulle, on cherche un caractère commun
         while ((iterator != NULL)&&(iterator->c != souschaine->c)){
             iterator=iterator->alt;
         }
+        
+        //Si on a trouvé un caractere commun
         if(iterator != NULL){
-            cpMots(&new, mot);
-            ajouterLettreMot(&new, iterator->c);
-            i = i + recsuggestionMot2(k, iterator->succ, souschaine->suivant, new, i);
+            cpMots(&new, mot); // On crée une copie du mot
+            ajouterLettreMot(&new, iterator->c); // On ajoute ce caractère à ce nouveau mot
+            i = i + recsuggestionMot2(k, iterator->succ, souschaine->suivant, new, i);// et on mets à jour le compteur de suggestions, en rappellant la fonction
         }
     }
 
     iterator = dico;
-
+        // On se retrouve ici lorsqu'on a parcouru tous les mots suivants ou qu'on a pas trouvé de lettre commun
+        // dans les deux cas, tant qu'on a pas atteint la fin des alternatives ou que le nombre de suggestions n'est pas atteint, on affiche tous les mots de toutes les alt en commençant par la 1ère (la racine des alt).
         while ((iterator != NULL)&&((i+n)<k)){
-                if(iterator->c == '$'){
+                if(iterator->c == '$'){ // Si c'est un mot on l'affiche
                     afficherMot(mot);
                     printf(", ");
                     i = i+1;
                 }
-                else if ((souschaine==NULL)||((souschaine != NULL)&&(iterator->c != souschaine->c))){
+                else if ((souschaine==NULL)||((souschaine != NULL)&&(iterator->c != souschaine->c))){ // Sinon si la fin du mot est atteint ou que
                     cpMots(&new, mot);
                     ajouterLettreMot(&new, iterator->c);
                     i = i + recsuggestionMot2(k, iterator->succ, NULL, new, i+n);
@@ -500,8 +510,10 @@ void suggestionMot2(int k, Dico dico, Mot souschaine){ // affiche tous les mots 
 }
 // FIN PRINT + FONCTIONS
 
-void afficherMotveridico(Mot mot, Dico * dico){
+void afficherMotveridico(char* monMot, Dico * dico){
+    // Fonction qui, pour un mot donné présent dans le dictionnaire, propose plusieurs choix à l'utilisateur
     printf("\n MOT : ");
+    Mot mot = creerMotString(monMot);
     Mot *iterator = &mot;
     while (iterator != NULL){
         printf("%c",iterator->c);
@@ -513,9 +525,13 @@ void afficherMotveridico(Mot mot, Dico * dico){
     int rep;
     int boole;
     char nouveau[30];
-    printf("\nChoix :");scanf("%d",&rep);
-    printf("\n");
+    
     do{
+        
+        printf("\nChoix :");
+        viderBuffer();
+        scanf("%d",&rep);
+        printf("\n");
         boole = 0;
     switch (rep) {
         case 1:
@@ -527,7 +543,7 @@ void afficherMotveridico(Mot mot, Dico * dico){
             printf("\nMOT CORRIGE !");
             break;
         case 2:
-            supprimeMot2(mot,*dico);
+            (*dico) = supprimeMot2(mot,*dico);
             printf("\nMOT SUPPRIME !");
             break;
         case 3:
@@ -543,17 +559,50 @@ void afficherMotveridico(Mot mot, Dico * dico){
     }while(boole);
 }
 
+// Fonction qui ajoute une mot à la liste passée en paramètre
+void ajouterMotListe(Mot mot, ListeMot *liste){
+    Mot *it = &mot;
+    int i =0;
+    // On compte le nombre de letttre
+    while (it != NULL){
+        i++;
+        it = it->suivant;
+    }
+    it = &mot;
+    // On crée un tableau de char avec le bon nombre de lettres
+    char * monMot = (char*)malloc(sizeof(char)*i);
+    i=0;
+    while (it != NULL){
+        monMot[i] = it->c;
+        it = it->suivant;
+        i++;
+    }
+    // Si c'est le premier mot, on lui donne une valeur
+    if(liste->mot == NULL){
+        liste->mot = monMot;
+    }else{//Sinon on l'ajoute à la suite
+        ListeMot *maListe = (ListeMot*)malloc(sizeof(ListeMot));
+        maListe->mot = monMot;
+        maListe->suivant = NULL;
+        ListeMot *itt = liste;
+        while(itt->suivant != NULL){//On trouve le dernier mot avant de l'ajouter
+            itt=itt->suivant;
+        }
+        itt->suivant = maListe;
+    }
+}
 
-
-void printALrecFILTREveridico(Dico *dico, Mot mot, Filtre filtre, Dico *dico2){
-    if(GLOB_aborterVeridico == 1){return;}
+// Crée une liste qui contient tous les mots du dictionnaire
+void listeAllMotsinDico(Dico *dico, Mot mot, Filtre filtre, Dico *dico2, ListeMot **liste){
+    ListeMot *newliste = *liste;
     
     Dico iterator = *dico;
     while (iterator != NULL){
         if(iterator->c == '$'){
             iterator=iterator->alt;
-            if((*filtre.fonction)(mot,filtre.param)){
-                afficherMotveridico(mot, dico2);
+            if((*filtre.fonction)(mot,filtre.param)){ // Si le mot satisfait les conditions de la fonction passée en paramètre, on l'ajoute à la liste
+                ajouterMotListe(mot, newliste);
+                (*liste) = newliste;
             }
         }
         else{
@@ -561,18 +610,34 @@ void printALrecFILTREveridico(Dico *dico, Mot mot, Filtre filtre, Dico *dico2){
             //        printf("Lettre: %c \n", iterator->c);
             cpMots(&new, mot);
             ajouterLettreMot(&new, iterator->c);
-            printALrecFILTREveridico(&iterator->succ, new, filtre, dico2);
+            listeAllMotsinDico(&iterator->succ, new, filtre, dico2, liste);
             iterator=iterator->alt;
         }
-        if(GLOB_aborterVeridico == 1){return;}
     }
 }
 
+// Procédure qui fait la liste de tous les mots du dico, et pour chaque mot dans la liste, demande à l'utilisateur ce qu'il veut faire
+void supprVeridico(Dico *dico, Filtre filtre){
+    Mot new = *creerMot('$', NULL);
+    ListeMot *liste = (ListeMot*)malloc(sizeof(ListeMot));
+    liste->mot=NULL;
+    liste->suivant=NULL;
+    listeAllMotsinDico(dico, new, filtre, dico, &liste);
+    
+    ListeMot * it = liste;
+    ListeMot * itt;
+    while ((it  != NULL)&&(GLOB_aborterVeridico==0)){ // tant qu'on a pas fini la liste & qu'on ne nous demande pas d'aborter la procédure, on demande à l'utilisateur d'effectuer une action pour chaque mot présent dans la liste.
+        afficherMotveridico(it->mot, dico);
+        itt = it;
+        it = it->suivant;
+        free(itt); // On fait attention à ne pas laisser la liste dans la mémoire
+    }
+}
 void veridico2(Dico * dico){
+    // Fonction qui affiche & demande à l'utilisateur ce qu'il veut faire.
     GLOB_aborterVeridico = 0;
     Filtre filtre;
-    Mot new = *creerMot('$', NULL);
-
+    GLOB_aborterVeridico = 0;
     printf("\n############################");
     printf("\n####### - VERIDICO - #######");
     printf("\n############################");
@@ -600,7 +665,7 @@ void veridico2(Dico * dico){
                 filtre.fonction = commencePar;
                 filtre.param = lettre;
                 printf("\n");
-                printALrecFILTREveridico(dico, new, filtre, dico);
+                supprVeridico(dico, filtre);
                 break;
             case 2:
                 printf("Nombre de lettre que doivent avoir les mots au maximum : ");
@@ -609,7 +674,7 @@ void veridico2(Dico * dico){
                 filtre.fonction = nbLettre;
                 filtre.param = nb;
                 printf("\n");
-                printALrecFILTREveridico(dico, new, filtre, dico);
+                supprVeridico(dico, filtre);
                 break;
             case 3:
                 break;
@@ -621,7 +686,7 @@ void veridico2(Dico * dico){
 
 
 }
-
+// Fonction qui charge tous les mots d'un fichier (dont le nom est passé en param) dans un AL
 Dico loadFileAL(char * nomFichier){
     FILE * fichier = fopen(nomFichier, "r");
     Dico dico = NULL;
@@ -653,6 +718,7 @@ Dico loadFileAL(char * nomFichier){
 
     return dico;
 }
+//Fonction qui renvoie une liste contenant tous les mots d'un fichier
 ListeMot * loadFileListe(char * nomFichier){
     FILE * fichier = fopen(nomFichier, "r");
     ListeMot * dico = (ListeMot*)malloc(sizeof(ListeMot));
@@ -689,6 +755,7 @@ ListeMot * loadFileListe(char * nomFichier){
     
     return dico;
 }
+// On écrit un mot dans le fichier passé en paramètre (le fichier doit être ouvert au préalable).
 void writeMot(Mot mot, FILE * fichier){
     Mot * it = &mot;
     while(it!=NULL){
@@ -697,6 +764,7 @@ void writeMot(Mot mot, FILE * fichier){
     }
     fputc('\n', fichier);
 }
+// On écrit le dictionnaire dans le fichier passé en paramètre, récursivement
 void writeFileALrec(FILE * fichier, Dico dico, Mot mot){
     Dico iterator = dico;
     while (iterator != NULL){
@@ -713,6 +781,7 @@ void writeFileALrec(FILE * fichier, Dico dico, Mot mot){
         iterator=iterator->alt;
     }
 }
+// Fonction à appeller pour écrire le dictionnaire dans le fichier dont le nom est passé en paramètre
 void writeFileAL(char * nomFichier, Dico dico){
     // On écrase le fichier
     FILE * fichier = fopen(nomFichier, "w+");
@@ -722,6 +791,8 @@ void writeFileAL(char * nomFichier, Dico dico){
         fclose(fichier);
     }
 }
+
+// fonction qui écrit la liste dans le fichier passé en paramètre
 void writeFileListe(char * nomFichier, ListeMot * liste){
     FILE * fichier = fopen(nomFichier, "w+");
     ListeMot * it = liste;
@@ -739,6 +810,7 @@ void writeFileListe(char * nomFichier, ListeMot * liste){
     fclose(fichier);
 }
 
+//Fonction verimot
 void verimot2(Dico dico){
     printf("\n############################");
     printf("\n####### - VERIMOT - ########");
